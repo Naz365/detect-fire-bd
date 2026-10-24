@@ -15,7 +15,7 @@ Welcome to the official repository for **Detect Fire Engineering BD** — Bangla
    * Annual Maintenance Contracts (AMC) & Industrial PPE Gear.
    * Real Industrial Project Showcase (Apex Textile, Square Pharma, Crown Tower, Incepta Chemical, KDS Garments).
    * Real Embedded Google Maps Location of Dhaka Corporate Hub.
-   * Corporate RFQ (Request for Quote) Form routing directly to WhatsApp (+8801320580632).
+   * Corporate RFQ (Request for Quote) Form routing directly to WhatsApp (+8801914457183).
 
 2. **Retail Online Store (`/store`)**:
    * High-converting single-page Cash on Delivery (COD) sales funnel.
@@ -88,7 +88,7 @@ npm run preview
 ---
 
 ## 📞 Official Contacts
-* **WhatsApp & Call Hotline:** `+8801320580632`
-* **Hotline 2:** `+8801320580631`
+* **Primary WhatsApp & Hotline:** `+8801914457183`
+* **Corporate & Support Desk:** `+8801320580632`, `+8801320580631`
 * **Facebook:** [facebook.com/detectfirebd](https://www.facebook.com/detectfirebd)
 * **Email:** `info@detectfirebd.com`
