@@ -1,4 +1,5 @@
 ---
+import CustomerAuthModal from './CustomerAuthModal.astro';
 ---
 <!-- Sticky Clean Corporate Header with Light & Dark Theme Support -->
 <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-xs transition-colors duration-200">
@@ -121,6 +122,19 @@
           বাং
         </button>
       </div>
+
+      <!-- Customer Login / Profile Button -->
+      <button 
+        type="button" 
+        id="navbar-auth-btn"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all border border-slate-200 dark:border-slate-800 cursor-pointer"
+        title="Customer Login / একাউন্ট"
+      >
+        <svg id="navbar-auth-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        <span id="navbar-user-initial" class="hidden font-bold text-xs text-red-600 dark:text-red-400"></span>
+      </button>
 
       <!-- 3. RETAIL SHOP BUTTON (MUST BE AT THE VERY FAR RIGHT!) -->
       <a 
@@ -373,8 +387,41 @@
 
 </div>
 
+<!-- Customer Authentication Modal -->
+<CustomerAuthModal />
+
 <!-- Client Script for Theme, Language & Fullscreen Menu -->
 <script>
+  import { auth } from '../lib/firebase';
+  import { onAuthStateChanged } from 'firebase/auth';
+
+  // ================= NAVBAR CUSTOMER AUTH STATE =================
+  const navbarAuthBtn = document.getElementById('navbar-auth-btn');
+  const navbarAuthIcon = document.getElementById('navbar-auth-icon');
+  const navbarUserInitial = document.getElementById('navbar-user-initial');
+
+  navbarAuthBtn?.addEventListener('click', () => {
+    if ((window as any).openCustomerAuthModal) {
+      (window as any).openCustomerAuthModal();
+    }
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const initial = (user.displayName || user.email || user.phoneNumber || 'U').charAt(0).toUpperCase();
+      navbarAuthIcon?.classList.add('hidden');
+      if (navbarUserInitial) {
+        navbarUserInitial.textContent = initial;
+        navbarUserInitial.classList.remove('hidden');
+      }
+      navbarAuthBtn?.setAttribute('title', user.displayName || user.email || 'My Account');
+    } else {
+      navbarAuthIcon?.classList.remove('hidden');
+      navbarUserInitial?.classList.add('hidden');
+      navbarAuthBtn?.setAttribute('title', 'Customer Login');
+    }
+  });
+
   // ================= THEME TOGGLE ENGINE =================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const sunIcon = document.getElementById('theme-sun-icon');

@@ -111,6 +111,68 @@ import { products } from '../data/products';
           </label>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Customer Auth State Banner -->
+            <div id="checkout-auth-banner" class="sm:col-span-2 mb-2 p-3.5 rounded-2xl border border-slate-200 bg-slate-50 transition">
+              
+              <!-- Logged Out View -->
+              <div id="auth-logged-out-box" class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xl">⚡</span>
+                  <div>
+                    <span class="text-xs font-bold text-slate-800 block">লগইন করে ১-ক্লিকে দ্রুত অর্ডার করতে চান?</span>
+                    <span class="text-[11px] text-slate-500">Google বা ফোন নম্বর দিয়ে সহজে সাইন ইন করুন (ঐচ্ছিক)</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button 
+                    type="button" 
+                    id="btn-quick-google-login" 
+                    class="inline-flex items-center gap-1.5 bg-white border border-slate-300 hover:border-red-500 text-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
+                  >
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.15z"/>
+                      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+                      <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                    <span>Google লগইন</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    id="btn-open-login-modal" 
+                    class="bg-slate-900 hover:bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
+                  >
+                    লগইন / OTP
+                  </button>
+                </div>
+              </div>
+
+              <!-- Logged In View -->
+              <div id="auth-logged-in-box" class="hidden items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 border border-emerald-500/40 flex items-center justify-center font-bold text-xs shrink-0">
+                    ✓
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs font-black text-slate-900" id="logged-user-name"></span>
+                      <span class="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded font-bold">ভেরিফাইড একাউন্ট</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500" id="logged-user-info"></span>
+                  </div>
+                </div>
+                <button 
+                  type="button" 
+                  id="btn-customer-logout" 
+                  class="text-xs text-rose-500 hover:text-rose-700 font-bold px-2 py-1 rounded-lg hover:bg-rose-50 transition cursor-pointer"
+                >
+                  লগআউট
+                </button>
+              </div>
+
+            </div>
+
             <!-- Full Name -->
             <div class="sm:col-span-2">
               <label for="cust-name" class="block text-xs font-bold text-slate-700 mb-1">
@@ -262,11 +324,72 @@ import { products } from '../data/products';
 
 <!-- Client Script for Real-Time Price Calculation, Radio Selection, and WhatsApp Order -->
 <script>
-  import { db } from '../lib/firebase';
+  import { db, auth, googleProvider } from '../lib/firebase';
   import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+  import { onAuthStateChanged, signOut, signInWithPopup } from 'firebase/auth';
 
   let currentQty = 1;
+  let currentCustomerUid = '';
+  let currentCustomerEmail = '';
   const targetWhatsAppNumber = "8801320580632"; // Detect Fire Official WhatsApp
+
+  // Auth State elements
+  const loggedOutBox = document.getElementById('auth-logged-out-box');
+  const loggedInBox = document.getElementById('auth-logged-in-box');
+  const loggedUserName = document.getElementById('logged-user-name');
+  const loggedUserInfo = document.getElementById('logged-user-info');
+  const btnQuickGoogle = document.getElementById('btn-quick-google-login');
+  const btnOpenModal = document.getElementById('btn-open-login-modal');
+  const btnCustomerLogout = document.getElementById('btn-customer-logout');
+
+  btnQuickGoogle?.addEventListener('click', async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err: any) {
+      if ((window as any).openCustomerAuthModal) {
+        (window as any).openCustomerAuthModal();
+      }
+    }
+  });
+
+  btnOpenModal?.addEventListener('click', () => {
+    if ((window as any).openCustomerAuthModal) {
+      (window as any).openCustomerAuthModal();
+    }
+  });
+
+  btnCustomerLogout?.addEventListener('click', () => {
+    signOut(auth);
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    const custNameInput = document.getElementById('cust-name') as HTMLInputElement;
+    const custPhoneInput = document.getElementById('cust-phone') as HTMLInputElement;
+
+    if (user) {
+      currentCustomerUid = user.uid;
+      currentCustomerEmail = user.email || '';
+      loggedOutBox?.classList.add('hidden');
+      loggedInBox?.classList.remove('hidden');
+      loggedInBox?.classList.add('flex');
+
+      if (loggedUserName) loggedUserName.textContent = user.displayName || 'সম্মানিত গ্রাহক';
+      if (loggedUserInfo) loggedUserInfo.textContent = user.email || user.phoneNumber || '';
+
+      if (custNameInput && !custNameInput.value && user.displayName) {
+        custNameInput.value = user.displayName;
+      }
+      if (custPhoneInput && !custPhoneInput.value && user.phoneNumber) {
+        custPhoneInput.value = user.phoneNumber.replace(/^\+880?/, '0');
+      }
+    } else {
+      currentCustomerUid = '';
+      currentCustomerEmail = '';
+      loggedOutBox?.classList.remove('hidden');
+      loggedInBox?.classList.add('hidden');
+      loggedInBox?.classList.remove('flex');
+    }
+  });
 
   const form = document.getElementById('fire-order-form') as HTMLFormElement;
   const radioLabels = document.querySelectorAll('.product-radio-label');
@@ -420,6 +543,8 @@ import { products } from '../data/products';
         totalAmount: grandTotal,
         shippingCost,
         shippingArea: shippingRadio?.value || 'dhaka',
+        customerUid: currentCustomerUid || null,
+        customerEmail: currentCustomerEmail || null,
         createdAt: serverTimestamp(),
         status: 'pending'
       }).catch(err => console.warn('Firestore order sync:', err));

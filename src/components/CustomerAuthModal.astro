@@ -1,0 +1,365 @@
+---
+---
+<!-- Customer Authentication Modal (Google, Phone OTP & Email) -->
+<div 
+  id="customer-auth-modal" 
+  class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300"
+>
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-slate-800 dark:text-slate-100 overflow-hidden">
+    
+    <!-- Close Button -->
+    <button 
+      type="button" 
+      id="close-auth-modal-btn" 
+      class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+      aria-label="Close"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Modal Header -->
+    <div class="text-center mb-6">
+      <div class="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/80 text-red-600 dark:text-red-400 border border-red-500/30 flex items-center justify-center mx-auto mb-3 text-xl font-bold">
+        👤
+      </div>
+      <h3 class="text-xl font-black tracking-tight text-slate-900 dark:text-white">
+        কাস্টমার একাউন্ট লগইন
+      </h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+        সহজে অর্ডার ট্র্যাকিং ও দ্রুত চেকআউটের জন্য লগইন করুন
+      </p>
+    </div>
+
+    <!-- 1-Click Google Sign In (Primary & Fastest) -->
+    <div class="space-y-4">
+      <button 
+        type="button" 
+        id="btn-google-signin" 
+        class="w-full flex items-center justify-center gap-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-white font-bold py-3.5 px-4 rounded-2xl border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-md transition cursor-pointer"
+      >
+        <!-- Google Logo SVG -->
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.15z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span class="text-sm">Google / Gmail দিয়ে সরাসরি সাইন ইন</span>
+      </button>
+
+      <!-- Divider -->
+      <div class="relative flex items-center justify-center py-1">
+        <div class="border-t border-slate-200 dark:border-slate-800 w-full"></div>
+        <span class="bg-white dark:bg-slate-900 px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider relative">
+          অথবা
+        </span>
+      </div>
+
+      <!-- Auth Method Switcher Tabs -->
+      <div class="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
+        <button 
+          type="button" 
+          id="tab-phone-auth" 
+          class="flex-1 py-2 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition"
+        >
+          📱 ফোন নম্বর (OTP)
+        </button>
+        <button 
+          type="button" 
+          id="tab-email-auth" 
+          class="flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+        >
+          ✉️ ইমেইল ও পাসওয়ার্ড
+        </button>
+      </div>
+
+      <!-- Phone Number Auth Form -->
+      <div id="phone-auth-container" class="space-y-3">
+        <!-- Step 1: Send OTP -->
+        <div id="phone-input-step" class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">বাংলাদেশি মোবাইল নম্বর</label>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
+                +880
+              </span>
+              <input 
+                type="tel" 
+                id="phone-number-input" 
+                placeholder="1XXXXXXXXX" 
+                class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white font-mono focus:outline-hidden focus:border-red-500"
+              />
+            </div>
+          </div>
+
+          <div id="recaptcha-container" class="flex justify-center"></div>
+
+          <button 
+            type="button" 
+            id="btn-send-otp" 
+            class="w-full bg-slate-900 dark:bg-slate-800 hover:bg-red-600 dark:hover:bg-red-600 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition cursor-pointer"
+          >
+            OTP কোড পাঠান
+          </button>
+        </div>
+
+        <!-- Step 2: Verify OTP -->
+        <div id="phone-verify-step" class="space-y-3 hidden">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">মোবাইলে পাঠানো ৬-সংখ্যার OTP লিখুন</label>
+            <input 
+              type="text" 
+              id="otp-code-input" 
+              placeholder="123456" 
+              maxlength="6"
+              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-center text-lg tracking-widest text-slate-900 dark:text-white font-mono focus:outline-hidden focus:border-red-500"
+            />
+          </div>
+
+          <button 
+            type="button" 
+            id="btn-verify-otp" 
+            class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition shadow-md cursor-pointer"
+          >
+            যাচাই ও লগইন করুন
+          </button>
+        </div>
+      </div>
+
+      <!-- Email / Password Auth Form -->
+      <form id="email-auth-form" class="space-y-3 hidden">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">ইমেইল এড্রেস</label>
+          <input 
+            type="email" 
+            id="email-input" 
+            placeholder="example@mail.com" 
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-hidden focus:border-red-500"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">পাসওয়ার্ড</label>
+          <input 
+            type="password" 
+            id="password-input" 
+            placeholder="••••••••" 
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-hidden focus:border-red-500"
+          />
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <button 
+            type="button" 
+            id="btn-email-signin" 
+            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer"
+          >
+            লগইন
+          </button>
+          <button 
+            type="button" 
+            id="btn-email-signup" 
+            class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-bold py-2.5 rounded-xl text-xs transition border border-slate-200 dark:border-slate-700 cursor-pointer"
+          >
+            নতুন একাউন্ট
+          </button>
+        </div>
+      </form>
+
+      <!-- Feedback / Error messages -->
+      <div id="auth-status-msg" class="text-xs text-center font-semibold hidden"></div>
+
+      <!-- Guest Continue Notice -->
+      <div class="text-center pt-2 border-t border-slate-100 dark:border-slate-800">
+        <button 
+          type="button" 
+          id="btn-continue-guest" 
+          class="text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition cursor-pointer"
+        >
+          লগইন ছাড়া সরাসরি ক্যাশ অন ডেলিভারিতে অর্ডার করতে চাই →
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  import { auth, googleProvider } from '../lib/firebase';
+  import { 
+    signInWithPopup, 
+    signInWithPhoneNumber, 
+    RecaptchaVerifier, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from 'firebase/auth';
+
+  // Elements
+  const modal = document.getElementById('customer-auth-modal');
+  const closeBtn = document.getElementById('close-auth-modal-btn');
+  const continueGuestBtn = document.getElementById('btn-continue-guest');
+  const btnGoogleSignIn = document.getElementById('btn-google-signin');
+  const authStatusMsg = document.getElementById('auth-status-msg');
+
+  // Tabs
+  const tabPhone = document.getElementById('tab-phone-auth');
+  const tabEmail = document.getElementById('tab-email-auth');
+  const phoneContainer = document.getElementById('phone-auth-container');
+  const emailForm = document.getElementById('email-auth-form');
+
+  // Phone Step Elements
+  const phoneInputStep = document.getElementById('phone-input-step');
+  const phoneVerifyStep = document.getElementById('phone-verify-step');
+  const phoneNumberInput = document.getElementById('phone-number-input') as HTMLInputElement;
+  const otpCodeInput = document.getElementById('otp-code-input') as HTMLInputElement;
+  const btnSendOtp = document.getElementById('btn-send-otp');
+  const btnVerifyOtp = document.getElementById('btn-verify-otp');
+
+  // Email Elements
+  const emailInput = document.getElementById('email-input') as HTMLInputElement;
+  const passwordInput = document.getElementById('password-input') as HTMLInputElement;
+  const btnEmailSignIn = document.getElementById('btn-email-signin');
+  const btnEmailSignUp = document.getElementById('btn-email-signup');
+
+  let confirmationResult: any = null;
+  let recaptchaVerifier: any = null;
+
+  // Open/Close Modal
+  function openAuthModal() {
+    modal?.classList.remove('opacity-0', 'pointer-events-none');
+    modal?.classList.add('opacity-100', 'pointer-events-auto');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAuthModal() {
+    modal?.classList.remove('opacity-100', 'pointer-events-auto');
+    modal?.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn?.addEventListener('click', closeAuthModal);
+  continueGuestBtn?.addEventListener('click', closeAuthModal);
+  (window as any).openCustomerAuthModal = openAuthModal;
+
+  // Tab Switching
+  tabPhone?.addEventListener('click', () => {
+    tabPhone.className = "flex-1 py-2 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition";
+    tabEmail!.className = "flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition";
+    phoneContainer?.classList.remove('hidden');
+    emailForm?.classList.add('hidden');
+  });
+
+  tabEmail?.addEventListener('click', () => {
+    tabEmail.className = "flex-1 py-2 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition";
+    tabPhone!.className = "flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition";
+    emailForm?.classList.remove('hidden');
+    phoneContainer?.classList.add('hidden');
+  });
+
+  function showStatus(text: string, isError = false) {
+    if (!authStatusMsg) return;
+    authStatusMsg.classList.remove('hidden');
+    authStatusMsg.textContent = text;
+    authStatusMsg.className = isError 
+      ? 'text-xs text-center font-semibold text-rose-500 block' 
+      : 'text-xs text-center font-semibold text-emerald-500 block';
+  }
+
+  // 1. Google 1-Click Sign In
+  btnGoogleSignIn?.addEventListener('click', async () => {
+    try {
+      showStatus('গুগল লগইন উইন্ডো ওপেন হচ্ছে...');
+      const res = await signInWithPopup(auth, googleProvider);
+      showStatus(`স্বাগতম ${res.user.displayName || 'সম্মানিত গ্রাহক'}! লগইন সফল হয়েছে।`);
+      setTimeout(closeAuthModal, 1500);
+    } catch (err: any) {
+      if (err.code === 'auth/unauthorized-domain') {
+        showStatus('ফায়ারবেস কনসোলে এই ডোমেনটি Authorized Domains-এ যুক্ত করতে হবে।', true);
+      } else {
+        showStatus(err.message || 'গুগল সাইন ইন সম্পন্ন হয়নি', true);
+      }
+    }
+  });
+
+  // 2. Phone OTP Sign In
+  btnSendOtp?.addEventListener('click', async () => {
+    const rawNumber = phoneNumberInput.value.trim().replace(/^0/, '');
+    if (!rawNumber || rawNumber.length < 9) {
+      showStatus('সঠিক মোবাইল নম্বর লিখুন (যেমন: 17XXXXXXXX)', true);
+      return;
+    }
+    const fullNumber = '+880' + rawNumber;
+
+    try {
+      showStatus('OTP কোড পাঠানো হচ্ছে...');
+      if (!recaptchaVerifier) {
+        recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+          size: 'invisible'
+        });
+      }
+
+      confirmationResult = await signInWithPhoneNumber(auth, fullNumber, recaptchaVerifier);
+      showStatus('আপনার মোবাইলে ৬-সংখ্যার OTP কোড পাঠানো হয়েছে!');
+      phoneInputStep?.classList.add('hidden');
+      phoneVerifyStep?.classList.remove('hidden');
+    } catch (err: any) {
+      showStatus(err.message || 'OTP পাঠাতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।', true);
+    }
+  });
+
+  btnVerifyOtp?.addEventListener('click', async () => {
+    const code = otpCodeInput.value.trim();
+    if (!code || code.length !== 6) {
+      showStatus('৬ সংখ্যার কোড লিখুন', true);
+      return;
+    }
+
+    try {
+      showStatus('কোড যাচাই হচ্ছে...');
+      await confirmationResult.confirm(code);
+      showStatus('মোবাইল ভেরিফিকেশন সফল! স্বাগতম।');
+      setTimeout(closeAuthModal, 1500);
+    } catch (err: any) {
+      showStatus('ভুল কোড! আবার চেষ্টা করুন।', true);
+    }
+  });
+
+  // 3. Email Sign In & Sign Up
+  btnEmailSignIn?.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    const pass = passwordInput.value;
+    if (!email || !pass) {
+      showStatus('ইমেইল ও পাসওয়ার্ড লিখুন', true);
+      return;
+    }
+    try {
+      showStatus('লগইন হচ্ছে...');
+      await signInWithEmailAndPassword(auth, email, pass);
+      showStatus('লগইন সফল!');
+      setTimeout(closeAuthModal, 1500);
+    } catch (err: any) {
+      showStatus('লগইন ব্যর্থ: ' + err.message, true);
+    }
+  });
+
+  btnEmailSignUp?.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    const pass = passwordInput.value;
+    if (!email || pass.length < 6) {
+      showStatus('অন্তত ৬ অক্ষরের পাসওয়ার্ড দিন', true);
+      return;
+    }
+    try {
+      showStatus('নতুন একাউন্ট তৈরি হচ্ছে...');
+      await createUserWithEmailAndPassword(auth, email, pass);
+      showStatus('একাউন্ট তৈরি সফল! স্বাগতম।');
+      setTimeout(closeAuthModal, 1500);
+    } catch (err: any) {
+      showStatus('একাউন্ট তৈরিতে সমস্যা: ' + err.message, true);
+    }
+  });
+</script>

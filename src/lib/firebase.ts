@@ -12,6 +12,17 @@ import {
   orderBy, 
   serverTimestamp 
 } from 'firebase/firestore';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  signOut,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+} from 'firebase/auth';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBY3flpzmhcr7tGLqldJlV114aHPB0MkHk",
@@ -26,6 +37,8 @@ export const firebaseConfig = {
 // Initialize Firebase App
 export const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
 
 // ImgBB API Key for 100% Free Unlimited Image Hosting
 export const IMGBB_API_KEY = "eb0e69bdd08e889d891aafbca2efef44";
