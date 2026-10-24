@@ -1,0 +1,1257 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="অ্যাডমিন প্যানেল | Detect Fire BD"
+  description="পণ্য আপলোড, মূল্য নির্ধারণ ও এসইও ব্লগ ম্যানেজমেন্ট ড্যাশবোর্ড।"
+>
+  <div class="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans">
+    
+    <!-- Top Header -->
+    <header class="bg-slate-850 border-b border-slate-800 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center overflow-hidden border border-red-500">
+          <img src="/images/logo.png" alt="Detect Fire" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-white flex items-center gap-2">
+            Detect Fire <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+          </h1>
+          <p class="text-xs text-slate-400">কন্ট্রোল ড্যাশবোর্ড (পণ্য ও এসইও ব্লগ)</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a 
+          href="/" 
+          target="_blank"
+          class="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
+        >
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          <span class="hidden sm:inline">B2B ওয়েবসাইট</span>
+        </a>
+        <a 
+          href="/store" 
+          target="_blank"
+          class="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
+        >
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="hidden sm:inline">রিটেইল শপ</span>
+        </a>
+        <button 
+          id="logout-btn" 
+          class="text-xs text-rose-400 hover:text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 px-3 py-1.5 rounded-lg border border-rose-800/50 transition hidden"
+        >
+          লগআউট
+        </button>
+      </div>
+    </header>
+
+    <!-- Login Modal (PIN Protection) -->
+    <div id="auth-overlay" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="bg-slate-850 border border-slate-700 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-center">
+        <div class="w-16 h-16 bg-red-600/10 border border-red-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold text-white mb-1">অ্যাডমিন প্রবেশদ্বার</h2>
+        <p class="text-xs text-slate-400 mb-5">ড্যাশবোর্ড ব্যবহারের জন্য অ্যাডমিন পাসওয়ার্ড বা পিন দিন</p>
+
+        <form id="pin-form" class="space-y-4">
+          <div>
+            <input 
+              type="password" 
+              id="admin-pin-input" 
+              placeholder="পাসওয়ার্ড লিখুন..." 
+              required
+              class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-center text-lg tracking-widest text-white focus:outline-hidden focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
+            />
+          </div>
+          <p id="pin-error" class="text-xs text-rose-500 hidden font-medium">ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।</p>
+          <button 
+            type="submit" 
+            class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold py-3 rounded-xl shadow-lg transition"
+          >
+            লগইন করুন
+          </button>
+        </form>
+        <p class="text-[11px] text-slate-500 mt-4">ডিফল্ট পাসওয়ার্ড: <span class="text-slate-400 font-mono">detectfire2026</span></p>
+      </div>
+    </div>
+
+    <!-- Admin Main Body (Hidden until authenticated) -->
+    <main id="admin-main" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8 hidden">
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-4">
+        <div class="flex items-center gap-2 bg-slate-800 p-1 rounded-xl">
+          <button 
+            id="tab-btn-products" 
+            class="px-5 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-red-600 text-white shadow-sm"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <span>পণ্য ব্যবস্থাপনা (<span id="product-count-badge">০</span>)</span>
+          </button>
+          <button 
+            id="tab-btn-blogs" 
+            class="px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
+            <span>এসইও ব্লগ পোস্ট (<span id="blog-count-badge">০</span>)</span>
+          </button>
+          <button 
+            id="tab-btn-orders" 
+            class="px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span>অর্ডারসমূহ (<span id="order-count-badge">০</span>)</span>
+          </button>
+        </div>
+
+        <!-- Sync Database helper buttons -->
+        <div class="flex items-center gap-2">
+          <button 
+            id="btn-sync-defaults" 
+            class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 px-3 py-2 rounded-xl transition flex items-center gap-1.5"
+            title="প্রাথমিক পণ্যগুলো ফায়ারস্টোর ডাটাবেসে সেভ করুন"
+          >
+            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span>ডিফল্ট পণ্য সিঙ্ক করুন</span>
+          </button>
+          <button 
+            id="btn-sync-blogs" 
+            class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 px-3 py-2 rounded-xl transition flex items-center gap-1.5"
+            title="প্রাথমিক এসইও ব্লগগুলো ডাটাবেসে সেভ করুন"
+          >
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>ডিফল্ট ব্লগ সিঙ্ক করুন</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 1: PRODUCTS ================= -->
+      <div id="section-products" class="space-y-8">
+        
+        <!-- Add Product Form Card -->
+        <div class="bg-slate-850 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-800">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                নতুন পণ্য আপলোড ফরম
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5">ছবি ড্র্যাগ অ্যান্ড ড্রপ করুন এবং পণ্যের বিবরণ দিয়ে সরাসরি পাবলিশ করুন</p>
+            </div>
+            <span class="text-xs text-slate-500 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800">
+              Cloud Firestore + ImgBB
+            </span>
+          </div>
+
+          <form id="add-product-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              <!-- Product Name -->
+              <div class="lg:col-span-2">
+                <label class="block text-xs font-semibold text-slate-300 mb-2">পণ্যের নাম *</label>
+                <input 
+                  type="text" 
+                  id="p-name" 
+                  placeholder="যেমন: ABC Dry Powder ফায়ার এক্সটিংগুইশার" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+                />
+              </div>
+
+              <!-- Category -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">ক্যাটাগরি *</label>
+                <select 
+                  id="p-category" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+                >
+                  <option value="extinguisher">ফায়ার এক্সটিংগুইশার</option>
+                  <option value="combo">স্পেশাল কম্বো অফার</option>
+                  <option value="gear">সেফটি গিয়ার ও পিপিই</option>
+                  <option value="sensor">স্মোক ও গ্যাস ডিটেক্টর</option>
+                  <option value="panel">কন্ট্রোল প্যানেল ও এক্সেসরিজ</option>
+                </select>
+              </div>
+
+              <!-- Weight / Variant Tag -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">ভেরিয়েন্ট / সাইজ ট্যাগ</label>
+                <input 
+                  type="text" 
+                  id="p-tag" 
+                  placeholder="যেমন: ৩ কেজি অথবা ৫ কেজি" 
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+                />
+                <span class="text-[10px] text-slate-500">বাংলাদেশে স্ট্যান্ডার্ড সাইজ: ৩ কেজি অথবা ৫ কেজি</span>
+              </div>
+
+              <!-- Regular Price -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">আসল মূল্য (৳) *</label>
+                <input 
+                  type="number" 
+                  id="p-regular-price" 
+                  placeholder="যেমন: ১৮৫০" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+                />
+              </div>
+
+              <!-- Sale Price -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">অফার মূল্য (৳) *</label>
+                <input 
+                  type="number" 
+                  id="p-sale-price" 
+                  placeholder="যেমন: ১৪৫০" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- Image Upload Zone (ImgBB Integration) -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">পণ্যের ছবি (ড্র্যাগ অ্যান্ড ড্রপ অথবা সিলেক্ট করুন) *</label>
+              
+              <div 
+                id="drop-zone" 
+                class="border-2 border-dashed border-slate-700 hover:border-red-500/80 rounded-2xl p-6 text-center cursor-pointer bg-slate-900/60 hover:bg-slate-900 transition flex flex-col items-center justify-center min-h-[160px] relative group"
+              >
+                <input 
+                  type="file" 
+                  id="p-image-file" 
+                  accept="image/*" 
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                />
+
+                <div id="upload-prompt" class="flex flex-col items-center pointer-events-none">
+                  <div class="w-12 h-12 rounded-full bg-red-600/10 text-red-500 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-semibold text-white">ছবি এখানে এনে ছেড়ে দিন অথবা ক্লিক করুন</p>
+                  <p class="text-xs text-slate-500 mt-1">স্বয়ংক্রিয়ভাবে ImgBB ক্লাউড স্টোরেজে আপলোড হবে (JPG, PNG, WEBP)</p>
+                </div>
+
+                <!-- Live Upload Preview -->
+                <div id="upload-preview" class="hidden flex-col items-center z-20">
+                  <div class="relative w-28 h-28 rounded-xl overflow-hidden border-2 border-red-500 shadow-lg bg-black">
+                    <img id="preview-img" src="" alt="Preview" class="w-full h-full object-cover" />
+                    <button 
+                      type="button" 
+                      id="remove-img-btn" 
+                      class="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 hover:bg-rose-700 transition"
+                      title="ছবি বাদ দিন"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <span id="upload-status" class="text-xs text-emerald-400 font-semibold mt-2">ছবি আপলোড সফল!</span>
+                </div>
+
+                <!-- Spinner -->
+                <div id="upload-spinner" class="hidden flex-col items-center z-20">
+                  <div class="w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-2"></div>
+                  <span class="text-xs text-red-400 font-medium">ছবি আপলোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন</span>
+                </div>
+              </div>
+
+              <!-- Hidden/Manual URL Fallback -->
+              <div class="mt-2 flex items-center gap-2">
+                <input 
+                  type="text" 
+                  id="p-image-url" 
+                  placeholder="অথবা সরাসরি ইমেজ লিংক (URL) লিখুন" 
+                  class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-hidden focus:border-red-500 transition font-mono"
+                />
+              </div>
+            </div>
+
+            <!-- Short Description -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">সংক্ষিপ্ত বিবরণ *</label>
+              <textarea 
+                id="p-desc" 
+                rows="2" 
+                placeholder="পণ্যের ব্যবহার ও প্রাথমিক সুবিধা সম্পর্কে ১-২ লাইনে লিখুন..." 
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+              ></textarea>
+            </div>
+
+            <!-- Specifications (Line separated) -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">পণ্যের বৈশিষ্ট্যসমূহ (প্রতি লাইনে একটি করে বৈশিষ্ট্য লিখুন)</label>
+              <textarea 
+                id="p-specs" 
+                rows="3" 
+                placeholder="যেমন:
+Class A, B, C আগুনে ১০০% কার্যকর
+মেয়াদকাল: ৩ বছর ভ্যালিড
+ওয়াল ব্র্যাকেট সহ সম্পূর্ণ নতুন" 
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-red-500 transition"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button & Feedback -->
+            <div class="flex items-center justify-between pt-2">
+              <div id="product-form-msg" class="text-xs font-semibold hidden"></div>
+              <button 
+                type="submit" 
+                id="submit-product-btn" 
+                class="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center gap-2"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>পণ্য পাবলিশ করুন</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Current Products List -->
+        <div class="bg-slate-850 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <span>লাইভ পণ্য তালিকা</span>
+            </h3>
+            <button 
+              id="refresh-products-btn" 
+              class="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>রিফ্রেশ</span>
+            </button>
+          </div>
+
+          <div id="products-loading" class="text-center py-10 text-slate-400">
+            <div class="w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+            পণ্য লোড হচ্ছে...
+          </div>
+
+          <!-- Product Grid/Table -->
+          <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 2: BLOGS ================= -->
+      <div id="section-blogs" class="space-y-8 hidden">
+        
+        <!-- Add Blog Form Card -->
+        <div class="bg-slate-850 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-800">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                নতুন এসইও ব্লগ আর্টিকেল পোস্ট করুন
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5">গুগল র‍্যাঙ্কিং বৃদ্ধি ও ইন্ডাস্ট্রিয়াল ক্লায়েন্ট আকর্ষণের জন্য আর্টিকেল লিখুন</p>
+            </div>
+            <span class="text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2.5 py-1 rounded-md">
+              SEO Ready
+            </span>
+          </div>
+
+          <form id="add-blog-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Blog Title -->
+              <div class="md:col-span-2">
+                <label class="block text-xs font-semibold text-slate-300 mb-2">ব্লগের শিরোনাম (Title) *</label>
+                <input 
+                  type="text" 
+                  id="b-title" 
+                  placeholder="যেমন: ফ্যাক্টরি ও কারখানায় ফায়ার লাইসেন্স পাওয়ার সঠিক নিয়ম ও কমপ্লায়েন্স" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition"
+                />
+              </div>
+
+              <!-- Slug -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">ইউআরএল স্লাগ (URL Slug) *</label>
+                <input 
+                  type="text" 
+                  id="b-slug" 
+                  placeholder="যেমন: factory-fire-license-guide-bd" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition font-mono"
+                />
+                <span class="text-[10px] text-slate-500">এটি ব্রাউজারের লিংকে দেখাবে: /blog/slug</span>
+              </div>
+
+              <!-- Category -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">ক্যাটাগরি *</label>
+                <input 
+                  type="text" 
+                  id="b-category" 
+                  placeholder="যেমন: কমপ্লায়েন্স ও লাইসেন্স, পণ্য গাইড, ইত্যাদি" 
+                  required
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition"
+                />
+              </div>
+
+              <!-- Author -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">লেখকের নাম</label>
+                <input 
+                  type="text" 
+                  id="b-author" 
+                  value="Detect Fire Safety Team" 
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition"
+                />
+              </div>
+
+              <!-- Read Time -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">পড়তে সময়</label>
+                <input 
+                  type="text" 
+                  id="b-readtime" 
+                  placeholder="যেমন: ৫ মিনিট" 
+                  value="৫ মিনিট" 
+                  class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- Blog Featured Image Upload -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">ফিচারড ইমেজ (Featured Image) *</label>
+              
+              <div 
+                id="blog-drop-zone" 
+                class="border-2 border-dashed border-slate-700 hover:border-emerald-500/80 rounded-2xl p-6 text-center cursor-pointer bg-slate-900/60 hover:bg-slate-900 transition flex flex-col items-center justify-center min-h-[140px] relative group"
+              >
+                <input 
+                  type="file" 
+                  id="b-image-file" 
+                  accept="image/*" 
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                />
+
+                <div id="blog-upload-prompt" class="flex flex-col items-center pointer-events-none">
+                  <div class="w-10 h-10 rounded-full bg-emerald-600/10 text-emerald-500 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-semibold text-white">ব্লগের কভার ছবি আপলোড করতে ক্লিক বা ড্র্যাগ করুন</p>
+                </div>
+
+                <div id="blog-upload-preview" class="hidden flex-col items-center z-20">
+                  <div class="relative w-36 h-20 rounded-xl overflow-hidden border-2 border-emerald-500 shadow-lg bg-black">
+                    <img id="blog-preview-img" src="" alt="Blog Preview" class="w-full h-full object-cover" />
+                  </div>
+                  <span class="text-xs text-emerald-400 font-semibold mt-1.5">কভার ছবি সফলভাবে আপলোড হয়েছে!</span>
+                </div>
+
+                <div id="blog-upload-spinner" class="hidden flex-col items-center z-20">
+                  <div class="w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-1"></div>
+                  <span class="text-xs text-emerald-400">আপলোড হচ্ছে...</span>
+                </div>
+              </div>
+
+              <div class="mt-2">
+                <input 
+                  type="text" 
+                  id="b-image-url" 
+                  placeholder="অথবা সরাসরি ইমেজ লিংক (URL) দিন" 
+                  class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-hidden focus:border-emerald-500 transition font-mono"
+                />
+              </div>
+            </div>
+
+            <!-- Meta Description -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">এসইও মেটা ডেসক্রিপশন (Meta Description) *</label>
+              <textarea 
+                id="b-meta" 
+                rows="2" 
+                placeholder="গুগল সার্চ রেজাল্টে দেখানোর জন্য আকর্ষণীয় ১৬০ অক্ষরের বিবরণ..." 
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition"
+              ></textarea>
+            </div>
+
+            <!-- Blog Article Body -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">ব্লগ আর্টিকেল বডি (HTML অথবা অনুচ্ছেদ) *</label>
+              <textarea 
+                id="b-content" 
+                rows="10" 
+                placeholder="এখানে আপনার সম্পূর্ণ ব্লগ লিখুন। প্যারাগ্রাফ, <h2>সাব-হেডিং</h2>, ও <ul><li>পয়েন্ট</li></ul> ব্যবহার করতে পারেন।" 
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-hidden focus:border-emerald-500 transition font-mono"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button & Feedback -->
+            <div class="flex items-center justify-between pt-2">
+              <div id="blog-form-msg" class="text-xs font-semibold hidden"></div>
+              <button 
+                type="submit" 
+                id="submit-blog-btn" 
+                class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center gap-2"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>ব্লগ পাবলিশ করুন</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Current Blogs List -->
+        <div class="bg-slate-850 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+              <span>পাবলিশড ব্লগ আর্টিকেলের তালিকা</span>
+            </h3>
+            <button 
+              id="refresh-blogs-btn" 
+              class="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>রিফ্রেশ</span>
+            </button>
+          </div>
+
+          <div id="blogs-loading" class="text-center py-10 text-slate-400">
+            <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+            ব্লগ লোড হচ্ছে...
+          </div>
+
+          <div id="blogs-container" class="space-y-3 hidden">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 3: ORDERS ================= -->
+      <div id="section-orders" class="space-y-8 hidden">
+        <div class="bg-slate-850 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span>কাস্টমার ক্যাশ অন ডেলিভারি অর্ডার তালিকা</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">গ্রাহকদের সরাসরি কল দিন অথবা হোয়াটসঅ্যাপে কনফার্মেশন মেসেজ পাঠান</p>
+            </div>
+            <button 
+              id="refresh-orders-btn" 
+              class="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>রিফ্রেশ</span>
+            </button>
+          </div>
+
+          <div id="orders-loading" class="text-center py-10 text-slate-400">
+            <div class="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+            অর্ডার তালিকা লোড হচ্ছে...
+          </div>
+
+          <div id="orders-container" class="space-y-3 hidden">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</Layout>
+
+<script>
+  import { db, uploadImageToImgBB } from '../../lib/firebase';
+  import { 
+    collection, 
+    addDoc, 
+    getDocs, 
+    deleteDoc, 
+    doc, 
+    serverTimestamp,
+    setDoc
+  } from 'firebase/firestore';
+  import { products as defaultProducts } from '../../data/products';
+  import { defaultBlogPosts } from '../../data/blogs';
+
+  const MASTER_PIN = 'detectfire2026';
+
+  // Elements
+  const authOverlay = document.getElementById('auth-overlay');
+  const adminMain = document.getElementById('admin-main');
+  const pinForm = document.getElementById('pin-form');
+  const adminPinInput = document.getElementById('admin-pin-input') as HTMLInputElement;
+  const pinError = document.getElementById('pin-error');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  // Tabs
+  const tabBtnProducts = document.getElementById('tab-btn-products');
+  const tabBtnBlogs = document.getElementById('tab-btn-blogs');
+  const tabBtnOrders = document.getElementById('tab-btn-orders');
+  const sectionProducts = document.getElementById('section-products');
+  const sectionBlogs = document.getElementById('section-blogs');
+  const sectionOrders = document.getElementById('section-orders');
+  const productCountBadge = document.getElementById('product-count-badge');
+  const blogCountBadge = document.getElementById('blog-count-badge');
+  const orderCountBadge = document.getElementById('order-count-badge');
+  const ordersContainer = document.getElementById('orders-container');
+  const ordersLoading = document.getElementById('orders-loading');
+  const refreshOrdersBtn = document.getElementById('refresh-orders-btn');
+
+  // Product Form elements
+  const addProductForm = document.getElementById('add-product-form') as HTMLFormElement;
+  const pImageFile = document.getElementById('p-image-file') as HTMLInputElement;
+  const pImageUrl = document.getElementById('p-image-url') as HTMLInputElement;
+  const uploadPrompt = document.getElementById('upload-prompt');
+  const uploadPreview = document.getElementById('upload-preview');
+  const uploadSpinner = document.getElementById('upload-spinner');
+  const previewImg = document.getElementById('preview-img') as HTMLImageElement;
+  const removeImgBtn = document.getElementById('remove-img-btn');
+  const productFormMsg = document.getElementById('product-form-msg');
+  const productsContainer = document.getElementById('products-container');
+  const productsLoading = document.getElementById('products-loading');
+  const refreshProductsBtn = document.getElementById('refresh-products-btn');
+
+  // Blog Form elements
+  const addBlogForm = document.getElementById('add-blog-form') as HTMLFormElement;
+  const bTitle = document.getElementById('b-title') as HTMLInputElement;
+  const bSlug = document.getElementById('b-slug') as HTMLInputElement;
+  const bImageFile = document.getElementById('b-image-file') as HTMLInputElement;
+  const bImageUrl = document.getElementById('b-image-url') as HTMLInputElement;
+  const blogUploadPrompt = document.getElementById('blog-upload-prompt');
+  const blogUploadPreview = document.getElementById('blog-upload-preview');
+  const blogUploadSpinner = document.getElementById('blog-upload-spinner');
+  const blogPreviewImg = document.getElementById('blog-preview-img') as HTMLImageElement;
+  const blogFormMsg = document.getElementById('blog-form-msg');
+  const blogsContainer = document.getElementById('blogs-container');
+  const blogsLoading = document.getElementById('blogs-loading');
+  const refreshBlogsBtn = document.getElementById('refresh-blogs-btn');
+
+  // Sync Buttons
+  const btnSyncDefaults = document.getElementById('btn-sync-defaults');
+  const btnSyncBlogs = document.getElementById('btn-sync-blogs');
+
+  // Auth Handling
+  function checkAuth() {
+    const isAuthed = sessionStorage.getItem('detect_fire_admin_auth') === 'true';
+    if (isAuthed) {
+      authOverlay?.classList.add('hidden');
+      adminMain?.classList.remove('hidden');
+      logoutBtn?.classList.remove('hidden');
+      loadProducts();
+      loadBlogs();
+      loadOrders();
+    } else {
+      authOverlay?.classList.remove('hidden');
+      adminMain?.classList.add('hidden');
+      logoutBtn?.classList.add('hidden');
+    }
+  }
+
+  pinForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (adminPinInput.value === MASTER_PIN) {
+      sessionStorage.setItem('detect_fire_admin_auth', 'true');
+      pinError?.classList.add('hidden');
+      checkAuth();
+    } else {
+      pinError?.classList.remove('hidden');
+      adminPinInput.value = '';
+    }
+  });
+
+  logoutBtn?.addEventListener('click', () => {
+    sessionStorage.removeItem('detect_fire_admin_auth');
+    checkAuth();
+  });
+
+  // Tab Switching
+  tabBtnProducts?.addEventListener('click', () => {
+    tabBtnProducts.className = "px-5 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-red-600 text-white shadow-sm";
+    tabBtnBlogs!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    tabBtnOrders!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    sectionProducts?.classList.remove('hidden');
+    sectionBlogs?.classList.add('hidden');
+    sectionOrders?.classList.add('hidden');
+  });
+
+  tabBtnBlogs?.addEventListener('click', () => {
+    tabBtnBlogs.className = "px-5 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-emerald-600 text-white shadow-sm";
+    tabBtnProducts!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    tabBtnOrders!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    sectionBlogs?.classList.remove('hidden');
+    sectionProducts?.classList.add('hidden');
+    sectionOrders?.classList.add('hidden');
+  });
+
+  tabBtnOrders?.addEventListener('click', () => {
+    tabBtnOrders.className = "px-5 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-amber-600 text-white shadow-sm";
+    tabBtnProducts!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    tabBtnBlogs!.className = "px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2";
+    sectionOrders?.classList.remove('hidden');
+    sectionProducts?.classList.add('hidden');
+    sectionBlogs?.classList.add('hidden');
+  });
+
+  // Auto-generate slug from title
+  bTitle?.addEventListener('input', () => {
+    if (!bSlug.value || bSlug.dataset.manual !== 'true') {
+      const generated = bTitle.value
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      if (generated) {
+        bSlug.value = generated;
+      }
+    }
+  });
+  bSlug?.addEventListener('focus', () => {
+    bSlug.dataset.manual = 'true';
+  });
+
+  // Image Upload - Product (ImgBB)
+  pImageFile?.addEventListener('change', async (e) => {
+    const file = pImageFile.files?.[0];
+    if (!file) return;
+
+    try {
+      uploadPrompt?.classList.add('hidden');
+      uploadSpinner?.classList.remove('hidden');
+      uploadPreview?.classList.add('hidden');
+
+      const imageUrl = await uploadImageToImgBB(file);
+      pImageUrl.value = imageUrl;
+      previewImg.src = imageUrl;
+
+      uploadSpinner?.classList.add('hidden');
+      uploadPreview?.classList.remove('hidden');
+    } catch (err: any) {
+      uploadSpinner?.classList.add('hidden');
+      uploadPrompt?.classList.remove('hidden');
+      alert('ইমেজ আপলোড ব্যর্থ হয়েছে: ' + (err?.message || 'অনুগ্রহ করে আবার চেষ্টা করুন'));
+    }
+  });
+
+  removeImgBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    pImageFile.value = '';
+    pImageUrl.value = '';
+    previewImg.src = '';
+    uploadPreview?.classList.add('hidden');
+    uploadPrompt?.classList.remove('hidden');
+  });
+
+  // Image Upload - Blog (ImgBB)
+  bImageFile?.addEventListener('change', async (e) => {
+    const file = bImageFile.files?.[0];
+    if (!file) return;
+
+    try {
+      blogUploadPrompt?.classList.add('hidden');
+      blogUploadSpinner?.classList.remove('hidden');
+      blogUploadPreview?.classList.add('hidden');
+
+      const imageUrl = await uploadImageToImgBB(file);
+      bImageUrl.value = imageUrl;
+      blogPreviewImg.src = imageUrl;
+
+      blogUploadSpinner?.classList.add('hidden');
+      blogUploadPreview?.classList.remove('hidden');
+    } catch (err: any) {
+      blogUploadSpinner?.classList.add('hidden');
+      blogUploadPrompt?.classList.remove('hidden');
+      alert('ব্লগ ইমেজ আপলোড ব্যর্থ হয়েছে: ' + (err?.message || 'অনুগ্রহ করে আবার চেষ্টা করুন'));
+    }
+  });
+
+  // Handle Add Product Submit
+  addProductForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById('p-name') as HTMLInputElement).value;
+    const category = (document.getElementById('p-category') as HTMLSelectElement).value;
+    const tag = (document.getElementById('p-tag') as HTMLInputElement).value;
+    const regularPrice = Number((document.getElementById('p-regular-price') as HTMLInputElement).value);
+    const salePrice = Number((document.getElementById('p-sale-price') as HTMLInputElement).value);
+    const image = pImageUrl.value || '/images/products/extinguisher-abc.jpg';
+    const description = (document.getElementById('p-desc') as HTMLTextAreaElement).value;
+    const specsRaw = (document.getElementById('p-specs') as HTMLTextAreaElement).value;
+    const specs = specsRaw.split('\n').map(s => s.trim()).filter(Boolean);
+
+    const categoryNames: Record<string, string> = {
+      extinguisher: 'ফায়ার এক্সটিংগুইশার',
+      combo: 'স্পেশাল কম্বো',
+      gear: 'সেফটি গিয়ার ও পিপিই',
+      sensor: 'স্মোক ও গ্যাস ডিটেক্টর',
+      panel: 'কন্ট্রোল প্যানেল ও এক্সেসরিজ'
+    };
+
+    const newProduct = {
+      name,
+      category,
+      categoryName: categoryNames[category] || 'ফায়ার সেফটি',
+      tag: tag || undefined,
+      regularPrice,
+      salePrice,
+      image,
+      description,
+      specs,
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      productFormMsg!.className = 'text-xs font-semibold text-amber-400 block';
+      productFormMsg!.innerText = 'ডাটাবেসে সেভ হচ্ছে...';
+
+      await addDoc(collection(db, 'products'), newProduct);
+
+      productFormMsg!.className = 'text-xs font-semibold text-emerald-400 block';
+      productFormMsg!.innerText = 'পণ্যটি সফলভাবে পাবলিশ হয়েছে!';
+      addProductForm.reset();
+      pImageUrl.value = '';
+      uploadPreview?.classList.add('hidden');
+      uploadPrompt?.classList.remove('hidden');
+
+      setTimeout(() => {
+        productFormMsg!.classList.add('hidden');
+      }, 4000);
+
+      loadProducts();
+    } catch (err: any) {
+      productFormMsg!.className = 'text-xs font-semibold text-rose-500 block';
+      productFormMsg!.innerText = 'সমস্যা হয়েছে: ' + (err?.message || 'ডাটাবেস এক্সেস সমস্যা');
+    }
+  });
+
+  // Handle Add Blog Submit
+  addBlogForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = bTitle.value;
+    const slug = bSlug.value.trim().toLowerCase().replace(/[\s_]+/g, '-');
+    const category = (document.getElementById('b-category') as HTMLInputElement).value;
+    const author = (document.getElementById('b-author') as HTMLInputElement).value || 'Detect Fire Team';
+    const readTime = (document.getElementById('b-readtime') as HTMLInputElement).value || '৫ মিনিট';
+    const featuredImage = bImageUrl.value || '/images/products/extinguisher-abc.jpg';
+    const metaDescription = (document.getElementById('b-meta') as HTMLTextAreaElement).value;
+    const content = (document.getElementById('b-content') as HTMLTextAreaElement).value;
+
+    const newBlog = {
+      title,
+      slug,
+      category,
+      author,
+      readTime,
+      featuredImage,
+      metaDescription,
+      content,
+      publishedAt: new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' }),
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      blogFormMsg!.className = 'text-xs font-semibold text-amber-400 block';
+      blogFormMsg!.innerText = 'ব্লগ পাবলিশ হচ্ছে...';
+
+      await setDoc(doc(db, 'blog_posts', slug), newBlog);
+
+      blogFormMsg!.className = 'text-xs font-semibold text-emerald-400 block';
+      blogFormMsg!.innerText = 'ব্লগ আর্টিকেল সফলভাবে পাবলিশ হয়েছে!';
+      addBlogForm.reset();
+      bImageUrl.value = '';
+      blogUploadPreview?.classList.add('hidden');
+      blogUploadPrompt?.classList.remove('hidden');
+
+      setTimeout(() => {
+        blogFormMsg!.classList.add('hidden');
+      }, 4000);
+
+      loadBlogs();
+    } catch (err: any) {
+      blogFormMsg!.className = 'text-xs font-semibold text-rose-500 block';
+      blogFormMsg!.innerText = 'সমস্যা হয়েছে: ' + (err?.message || 'ডাটাবেস এরর');
+    }
+  });
+
+  // Load Products from Firestore
+  async function loadProducts() {
+    productsLoading?.classList.remove('hidden');
+    productsContainer?.classList.add('hidden');
+
+    try {
+      const snap = await getDocs(collection(db, 'products'));
+      const list: any[] = [];
+      snap.forEach(docSnap => {
+        list.push({ id: docSnap.id, ...docSnap.data() });
+      });
+
+      productCountBadge!.innerText = list.length.toString();
+      renderProducts(list);
+    } catch (err) {
+      console.warn('Firestore products fetch error:', err);
+      // Fallback display
+      productCountBadge!.innerText = defaultProducts.length.toString();
+      renderProducts(defaultProducts, true);
+    } finally {
+      productsLoading?.classList.add('hidden');
+      productsContainer?.classList.remove('hidden');
+    }
+  }
+
+  function renderProducts(items: any[], isFallback = false) {
+    if (!productsContainer) return;
+    if (items.length === 0) {
+      productsContainer.innerHTML = `
+        <div class="col-span-full text-center py-8 text-slate-400">
+          কোনো পণ্য পাওয়া যায়নি। উপরের ফর্ম থেকে নতুন পণ্য যোগ করুন অথবা "ডিফল্ট পণ্য সিঙ্ক করুন" এ ক্লিক করুন।
+        </div>
+      `;
+      return;
+    }
+
+    productsContainer.innerHTML = items.map(p => `
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition">
+        <div>
+          <div class="relative w-full h-40 bg-slate-950 rounded-lg overflow-hidden mb-3 border border-slate-800">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain p-2" onerror="this.src='/images/products/extinguisher-abc.jpg'" />
+            ${p.tag ? `<span class="absolute top-2 left-2 bg-red-600 text-[10px] font-bold text-white px-2 py-0.5 rounded-full">${p.tag}</span>` : ''}
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">${p.categoryName || p.category}</span>
+          <h4 class="text-sm font-bold text-white line-clamp-2 mt-0.5 mb-2">${p.name}</h4>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-base font-extrabold text-red-500">৳${p.salePrice}</span>
+            <span class="text-xs text-slate-500 line-through">৳${p.regularPrice}</span>
+          </div>
+          <p class="text-xs text-slate-400 line-clamp-2 mb-3">${p.description || ''}</p>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+          <a href="/store" target="_blank" class="text-xs text-slate-400 hover:text-white flex items-center gap-1">
+            <span>স্টোরে দেখুন</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+          ${!isFallback ? `
+            <button 
+              data-delete-id="${p.id}" 
+              class="delete-product-btn text-xs text-rose-400 hover:text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 px-2.5 py-1 rounded-md border border-rose-800/50 transition flex items-center gap-1"
+            >
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>ডিলিট</span>
+            </button>
+          ` : '<span class="text-[10px] text-slate-500">ডিফল্ট কোড ডাটা</span>'}
+        </div>
+      </div>
+    `).join('');
+
+    // Attach delete listeners
+    document.querySelectorAll('.delete-product-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = (e.currentTarget as HTMLElement).getAttribute('data-delete-id');
+        if (id && confirm('আপনি কি নিশ্চিত যে পণ্যটি ডাটাবেস থেকে মুছে ফেলতে চান?')) {
+          try {
+            await deleteDoc(doc(db, 'products', id));
+            loadProducts();
+          } catch (err: any) {
+            alert('ডিলিট করতে সমস্যা হয়েছে: ' + err?.message);
+          }
+        }
+      });
+    });
+  }
+
+  // Load Blogs from Firestore
+  async function loadBlogs() {
+    blogsLoading?.classList.remove('hidden');
+    blogsContainer?.classList.add('hidden');
+
+    try {
+      const snap = await getDocs(collection(db, 'blog_posts'));
+      const list: any[] = [];
+      snap.forEach(docSnap => {
+        list.push({ id: docSnap.id, ...docSnap.data() });
+      });
+
+      blogCountBadge!.innerText = list.length.toString();
+      renderBlogs(list);
+    } catch (err) {
+      console.warn('Firestore blogs fetch error:', err);
+      blogCountBadge!.innerText = defaultBlogPosts.length.toString();
+      renderBlogs(defaultBlogPosts, true);
+    } finally {
+      blogsLoading?.classList.add('hidden');
+      blogsContainer?.classList.remove('hidden');
+    }
+  }
+
+  function renderBlogs(items: any[], isFallback = false) {
+    if (!blogsContainer) return;
+    if (items.length === 0) {
+      blogsContainer.innerHTML = `
+        <div class="text-center py-8 text-slate-400">
+          কোনো ব্লগ পোস্ট পাওয়া যায়নি। উপরের ফর্ম থেকে নতুন পোস্ট যোগ করুন অথবা "ডিফল্ট ব্লগ সিঙ্ক করুন" চাপুন।
+        </div>
+      `;
+      return;
+    }
+
+    blogsContainer.innerHTML = items.map(b => `
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-slate-700 transition">
+        <div class="flex items-center gap-4">
+          <img 
+            src="${b.featuredImage || '/images/products/extinguisher-abc.jpg'}" 
+            alt="${b.title}" 
+            class="w-16 h-16 rounded-lg object-cover bg-slate-950 shrink-0 border border-slate-800"
+          />
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[10px] bg-emerald-950/70 text-emerald-400 border border-emerald-800/60 px-2 py-0.5 rounded-full font-medium">
+                ${b.category}
+              </span>
+              <span class="text-xs text-slate-500">${b.publishedAt || 'আজ'}</span>
+            </div>
+            <h4 class="text-sm font-bold text-white line-clamp-1">${b.title}</h4>
+            <p class="text-xs text-slate-400 font-mono mt-0.5">/blog/${b.slug}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-end sm:self-center">
+          <a 
+            href="/blog/${b.slug}" 
+            target="_blank" 
+            class="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1"
+          >
+            <span>লাইভ দেখুন</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+          ${!isFallback ? `
+            <button 
+              data-delete-blog="${b.id || b.slug}" 
+              class="delete-blog-btn text-xs text-rose-400 hover:text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 px-3 py-1.5 rounded-lg border border-rose-800/50 transition flex items-center gap-1"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>ডিলিট</span>
+            </button>
+          ` : '<span class="text-[10px] text-slate-500">ডিফল্ট কোড ব্লগ</span>'}
+        </div>
+      </div>
+    `).join('');
+
+    // Attach blog delete listeners
+    document.querySelectorAll('.delete-blog-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = (e.currentTarget as HTMLElement).getAttribute('data-delete-blog');
+        if (id && confirm('আপনি কি নিশ্চিত যে ব্লগ আর্টিকেলটি মুছে ফেলতে চান?')) {
+          try {
+            await deleteDoc(doc(db, 'blog_posts', id));
+            loadBlogs();
+          } catch (err: any) {
+            alert('ডিলিট সমস্যা: ' + err?.message);
+          }
+        }
+      });
+    });
+  }
+
+  // Sync Defaults to Firestore
+  btnSyncDefaults?.addEventListener('click', async () => {
+    if (!confirm('আপনি কি পূর্বনির্ধারিত ১৪টি পণ্য ডাটাবেসে সিঙ্ক করতে চান?')) return;
+    try {
+      btnSyncDefaults.innerText = 'সিঙ্ক হচ্ছে...';
+      for (const p of defaultProducts) {
+        await setDoc(doc(db, 'products', p.id), {
+          ...p,
+          createdAt: serverTimestamp()
+        });
+      }
+      alert('সফলভাবে ডিফল্ট পণ্যগুলো ফায়ারস্টোরে সিঙ্ক হয়েছে!');
+      btnSyncDefaults.innerText = 'ডিফল্ট পণ্য সিঙ্ক করুন';
+      loadProducts();
+    } catch (err: any) {
+      alert('সিঙ্ক ব্যর্থ: ' + err?.message);
+      btnSyncDefaults.innerText = 'ডিফল্ট পণ্য সিঙ্ক করুন';
+    }
+  });
+
+  btnSyncBlogs?.addEventListener('click', async () => {
+    if (!confirm('আপনি কি ৩টি প্রাথমিক এসইও ব্লগ ডাটাবেসে সিঙ্ক করতে চান?')) return;
+    try {
+      btnSyncBlogs.innerText = 'সিঙ্ক হচ্ছে...';
+      for (const b of defaultBlogPosts) {
+        await setDoc(doc(db, 'blog_posts', b.slug), {
+          ...b,
+          createdAt: serverTimestamp()
+        });
+      }
+      alert('সফলভাবে ব্লগ আর্টিকেলগুলো ফায়ারস্টোরে সিঙ্ক হয়েছে!');
+      btnSyncBlogs.innerText = 'ডিফল্ট ব্লগ সিঙ্ক করুন';
+      loadBlogs();
+    } catch (err: any) {
+      alert('সিঙ্ক ব্যর্থ: ' + err?.message);
+      btnSyncBlogs.innerText = 'ডিফল্ট ব্লগ সিঙ্ক করুন';
+    }
+  });
+
+  // Load Orders from Firestore
+  async function loadOrders() {
+    ordersLoading?.classList.remove('hidden');
+    ordersContainer?.classList.add('hidden');
+
+    try {
+      const snap = await getDocs(collection(db, 'orders'));
+      const list: any[] = [];
+      snap.forEach(docSnap => {
+        list.push({ id: docSnap.id, ...docSnap.data() });
+      });
+
+      orderCountBadge!.innerText = list.length.toString();
+      renderOrders(list);
+    } catch (err) {
+      console.warn('Firestore orders fetch error:', err);
+      orderCountBadge!.innerText = '০';
+      renderOrders([]);
+    } finally {
+      ordersLoading?.classList.add('hidden');
+      ordersContainer?.classList.remove('hidden');
+    }
+  }
+
+  function renderOrders(items: any[]) {
+    if (!ordersContainer) return;
+    if (items.length === 0) {
+      ordersContainer.innerHTML = `
+        <div class="text-center py-8 text-slate-400">
+          এখনো কোনো কাস্টমার অর্ডার পাওয়া যায়নি। ওয়েবসাইট বা রিটেইল শপ থেকে অর্ডার আসলে এখানে জমা হবে।
+        </div>
+      `;
+      return;
+    }
+
+    ordersContainer.innerHTML = items.map(ord => `
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-slate-700 transition">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/60 px-2 py-0.5 rounded">
+              ${ord.orderId || 'DF-ORD'}
+            </span>
+            <span class="text-xs font-bold text-white">${ord.customerName || 'নামবিহীন গ্রাহক'}</span>
+            <span class="text-[11px] text-slate-500 font-mono">(${ord.shippingArea === 'dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'})</span>
+          </div>
+
+          <div class="text-xs text-slate-300">
+            <span class="text-red-400 font-bold">${ord.productName}</span> × <span class="font-bold">${ord.quantity || 1}টি</span>
+            <span class="text-slate-500 ml-2">মোট বিল: <strong class="text-white">৳${ord.totalAmount}</strong></span>
+          </div>
+
+          <div class="text-xs text-slate-400 flex items-start gap-1">
+            <span>📍</span>
+            <span>${ord.address || 'ঠিকানা দেওয়া হয়নি'}</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-end md:self-center">
+          ${ord.phone ? `
+            <a 
+              href="tel:${ord.phone}" 
+              class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition font-mono font-semibold"
+            >
+              <span>📞</span>
+              <span>${ord.phone}</span>
+            </a>
+            <a 
+              href="https://wa.me/88${ord.phone.replace(/[^0-9]/g, '')}?text=হ্যালো%20${encodeURIComponent(ord.customerName || '')},%20Detect%20Fire%20BD%20থেকে%20আপনার%20অর্ডারটি%20কনফার্মেশন%20করার%20জন্য%20যোগাযোগ%20করা%20হয়েছে।" 
+              target="_blank"
+              class="text-xs bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-800/60 flex items-center gap-1 transition font-semibold"
+            >
+              <span>WhatsApp</span>
+            </a>
+          ` : ''}
+
+          <button 
+            data-delete-order="${ord.id}" 
+            class="delete-order-btn text-xs text-rose-400 hover:text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 px-2.5 py-1.5 rounded-lg border border-rose-800/50 transition"
+            title="অর্ডারটি তালিকা থেকে মুছুন"
+          >
+            ডিলিট
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach order delete listener
+    document.querySelectorAll('.delete-order-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = (e.currentTarget as HTMLElement).getAttribute('data-delete-order');
+        if (id && confirm('অর্ডার রেকর্ডটি মুছে ফেলতে চান?')) {
+          try {
+            await deleteDoc(doc(db, 'orders', id));
+            loadOrders();
+          } catch (err: any) {
+            alert('ডিলিট এরর: ' + err?.message);
+          }
+        }
+      });
+    });
+  }
+
+  refreshProductsBtn?.addEventListener('click', loadProducts);
+  refreshBlogsBtn?.addEventListener('click', loadBlogs);
+  refreshOrdersBtn?.addEventListener('click', loadOrders);
+
+  // Initial Check
+  checkAuth();
+</script>

@@ -1,0 +1,474 @@
+---
+---
+<!-- Sticky Clean Corporate Header with Light & Dark Theme Support -->
+<header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-xs transition-colors duration-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
+    
+    <!-- Left: Prominent Corporate Brand Logo -->
+    <a href="/" class="flex items-center gap-3.5 group shrink-0 py-1">
+      <!-- Logo Mark Container (Enlarged & High-Resolution) -->
+      <div class="relative w-13 h-13 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border-2 border-red-600 dark:border-red-500 shadow-md p-1 bg-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300">
+        <img 
+          src="/images/logo.png" 
+          alt="Detect Fire Engineering BD Logo" 
+          class="w-full h-full object-contain"
+        />
+      </div>
+
+      <!-- Typography -->
+      <div class="flex flex-col">
+        <div class="flex items-center gap-1.5 leading-none">
+          <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-950 dark:text-white">
+            DETECT
+          </span>
+          <span class="text-xl sm:text-2xl font-black tracking-tight text-red-600 dark:text-red-500">
+            FIRE
+          </span>
+        </div>
+        <div class="flex items-center gap-1.5 mt-1">
+          <span class="text-[11px] sm:text-xs font-black tracking-widest text-slate-600 dark:text-slate-300 uppercase">
+            Engineering BD
+          </span>
+          <span class="hidden sm:inline-block w-1 h-1 rounded-full bg-red-600"></span>
+          <span class="hidden sm:inline-block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+            Fire & Life Safety
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Center: Corporate Navigation Links (English by Default) -->
+    <nav class="hidden lg:flex items-center gap-7 text-sm font-bold text-slate-700 dark:text-slate-200">
+      <a 
+        href="/" 
+        class="hover:text-red-600 dark:hover:text-red-400 transition-colors nav-link-item" 
+        data-en="Home" 
+        data-bn="হোম"
+      >
+        Home
+      </a>
+      <a 
+        href="/#about" 
+        class="hover:text-red-600 dark:hover:text-red-400 transition-colors nav-link-item" 
+        data-en="About Us" 
+        data-bn="আমাদের সম্পর্কে"
+      >
+        About Us
+      </a>
+      <a 
+        href="/#services" 
+        class="hover:text-red-600 dark:hover:text-red-400 transition-colors nav-link-item" 
+        data-en="Services" 
+        data-bn="সার্ভিসসমূহ"
+      >
+        Services
+      </a>
+      <a 
+        href="/#projects" 
+        class="hover:text-red-600 dark:hover:text-red-400 transition-colors nav-link-item" 
+        data-en="Our Projects" 
+        data-bn="প্রজেক্টসমূহ"
+      >
+        Our Projects
+      </a>
+      <a 
+        href="/#contact" 
+        class="hover:text-red-600 dark:hover:text-red-400 transition-colors nav-link-item" 
+        data-en="Contact Us" 
+        data-bn="যোগাযোগ"
+      >
+        Contact Us
+      </a>
+    </nav>
+
+    <!-- Right Controls: Theme Toggle, Language Switcher, Far-Right SHOP CTA & Hamburger -->
+    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      
+      <!-- 1. Dark/Light Theme Toggle Button -->
+      <button 
+        type="button" 
+        id="theme-toggle-btn"
+        aria-label="Toggle Dark / Light Theme"
+        title="Toggle Theme"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all border border-slate-200 dark:border-slate-800 cursor-pointer"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg id="theme-sun-icon" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg id="theme-moon-icon" class="w-4 h-4 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+
+      <!-- 2. Language Toggle Pill (Default English) -->
+      <div class="flex items-center bg-slate-100 dark:bg-slate-900 p-0.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold" id="lang-switch-container">
+        <button 
+          type="button" 
+          id="btn-lang-en" 
+          class="px-2.5 py-1 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-xs cursor-pointer font-bold"
+          title="English Language (Default)"
+        >
+          EN
+        </button>
+        <button 
+          type="button" 
+          id="btn-lang-bn" 
+          class="px-2.5 py-1 rounded-lg transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white cursor-pointer font-semibold"
+          title="বাংলা ভাষা"
+        >
+          বাং
+        </button>
+      </div>
+
+      <!-- 3. RETAIL SHOP BUTTON (MUST BE AT THE VERY FAR RIGHT!) -->
+      <a 
+        href="/store" 
+        id="navbar-shop-btn"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-700 hover:to-rose-800 text-white font-black text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-xl shadow-md hover:shadow-red-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+        title="Visit Retail Online Store"
+      >
+        <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <span class="nav-shop-label">Shop</span>
+      </a>
+
+      <!-- 4. Modern Fullscreen Hamburger Menu Trigger -->
+      <button 
+        type="button" 
+        id="menu-toggle-btn"
+        aria-label="Toggle Fullscreen Menu"
+        class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer border border-slate-200 dark:border-slate-800"
+      >
+        <span class="w-5 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300"></span>
+        <span class="w-5 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300"></span>
+        <span class="w-3.5 self-start ml-2.5 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300"></span>
+      </button>
+
+    </div>
+  </div>
+</header>
+
+<!-- ================= FULL-SCREEN LUXURY EXECUTIVE MENU ================= -->
+<div 
+  id="fullscreen-menu-overlay" 
+  class="fixed inset-0 z-50 bg-slate-950/98 backdrop-blur-2xl text-white opacity-0 pointer-events-none transition-all duration-300 flex flex-col justify-between overflow-y-auto"
+>
+  
+  <!-- Overlay Header -->
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between border-b border-slate-800/80 shrink-0">
+    <!-- Brand Logo in Menu -->
+    <a href="/" class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-red-500 bg-white p-1 flex items-center justify-center shrink-0">
+        <img src="/images/logo.png" alt="Detect Fire" class="w-full h-full object-contain" />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xl font-black tracking-tight text-white">
+          DETECT <span class="text-red-500">FIRE</span>
+        </span>
+        <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+          Engineering BD
+        </span>
+      </div>
+    </a>
+
+    <!-- Overlay Close Button & Language Toggle -->
+    <div class="flex items-center gap-3">
+      <button 
+        type="button" 
+        id="menu-close-btn"
+        class="w-10 h-10 rounded-full bg-slate-900 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-slate-800 hover:border-red-500 cursor-pointer"
+        aria-label="Close Menu"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay Main Content: 4 Beautiful Structured Columns -->
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 flex-1 flex flex-col justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      
+      <!-- COLUMN 1: B2B Engineering Solutions -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+          <span>01</span>
+          <span class="w-6 h-px bg-red-500/60"></span>
+          <span>Engineering</span>
+        </div>
+        <h3 class="text-xl font-bold text-white tracking-tight">Corporate Solutions</h3>
+        <ul class="space-y-3 text-sm text-slate-400">
+          <li>
+            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Fire Hydrant & Sprinklers</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Central Fire Alarm Panels</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Civil Defense License Audit</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Cylinder Refilling & Hydro-test</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Annual Maintenance (AMC)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 2: Our Projects -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+          <span>02</span>
+          <span class="w-6 h-px bg-red-500/60"></span>
+          <span>Portfolio</span>
+        </div>
+        <h3 class="text-xl font-bold text-white tracking-tight">Featured Projects</h3>
+        <ul class="space-y-3 text-sm text-slate-400">
+          <li>
+            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>RMG & Garments Factories</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Pharma Logistics Hubs</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Commercial High-Rises</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Chemical Warehouses</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 3: Retail Store & Equipment -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+          <span>03</span>
+          <span class="w-6 h-px bg-red-500/60"></span>
+          <span>Online Store</span>
+        </div>
+        <h3 class="text-xl font-bold text-white tracking-tight">Retail Equipment</h3>
+        <ul class="space-y-3 text-sm text-slate-400">
+          <li>
+            <a href="/store#combos" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Special Safety Combos</span>
+            </a>
+          </li>
+          <li>
+            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>ABC Dry Powder (3kg & 5kg)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>CO2 Extinguishers (3kg & 5kg)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+              <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span>Smoke & LPG Gas Detectors</span>
+            </a>
+          </li>
+        </ul>
+        <div class="pt-2">
+          <a 
+            href="/store" 
+            class="inline-flex items-center gap-2 text-xs font-bold bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition menu-close-trigger"
+          >
+            <span>Visit 1-Click COD Store</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 4: Contact & Portal -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+          <span>04</span>
+          <span class="w-6 h-px bg-red-500/60"></span>
+          <span>Contact</span>
+        </div>
+        <h3 class="text-xl font-bold text-white tracking-tight">Hotlines & Support</h3>
+        
+        <div class="space-y-3 text-sm text-slate-300">
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <span class="text-[11px] text-slate-400 block">WhatsApp & Primary Hotline</span>
+            <a href="tel:+8801320580632" class="font-bold text-white font-mono hover:text-red-400 transition">+8801320580632</a>
+          </div>
+
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <span class="text-[11px] text-slate-400 block">Secondary Hotline</span>
+            <a href="tel:+8801320580631" class="font-bold text-white font-mono hover:text-red-400 transition">+8801320580631</a>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <a 
+              href="https://www.facebook.com/detectfirebd" 
+              target="_blank" 
+              class="flex-1 text-center py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition"
+            >
+              Facebook
+            </a>
+            <a 
+              href="/admin" 
+              class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold rounded-xl border border-slate-800 transition menu-close-trigger"
+              title="Admin Portal"
+            >
+              Admin
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Overlay Footer Bar -->
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 shrink-0">
+    <div>
+      © 2026 <b>Detect Fire Engineering BD</b>. Fire Safety & Industrial Protection.
+    </div>
+    <div class="flex items-center gap-6">
+      <span class="text-slate-400">BNBC & NFPA Standards</span>
+      <span>•</span>
+      <span class="text-slate-400">Nationwide Delivery & On-Site Installation</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Client Script for Theme, Language & Fullscreen Menu -->
+<script>
+  // ================= THEME TOGGLE ENGINE =================
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  const sunIcon = document.getElementById('theme-sun-icon');
+  const moonIcon = document.getElementById('theme-moon-icon');
+
+  function updateThemeUI(isDark: boolean) {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      sunIcon?.classList.remove('hidden');
+      moonIcon?.classList.add('hidden');
+      localStorage.setItem('detect_fire_theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      sunIcon?.classList.add('hidden');
+      moonIcon?.classList.remove('hidden');
+      localStorage.setItem('detect_fire_theme', 'light');
+    }
+  }
+
+  // Init Theme
+  const isCurrentlyDark = document.documentElement.classList.contains('dark');
+  updateThemeUI(isCurrentlyDark);
+
+  themeToggleBtn?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    updateThemeUI(!isDark);
+  });
+
+  // ================= LANGUAGE SWITCHER ENGINE =================
+  const btnLangEn = document.getElementById('btn-lang-en');
+  const btnLangBn = document.getElementById('btn-lang-bn');
+  const shopLabel = document.querySelector('.nav-shop-label');
+
+  let currentLang = localStorage.getItem('detect_fire_lang') || 'EN';
+
+  function applyLanguage(lang: string) {
+    currentLang = lang;
+    localStorage.setItem('detect_fire_lang', lang);
+
+    if (lang === 'EN') {
+      btnLangEn?.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-950', 'dark:text-white', 'shadow-xs');
+      btnLangEn?.classList.remove('text-slate-500', 'dark:text-slate-400');
+      btnLangBn?.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-950', 'dark:text-white', 'shadow-xs');
+      btnLangBn?.classList.add('text-slate-500', 'dark:text-slate-400');
+
+      if (shopLabel) shopLabel.textContent = 'Shop';
+    } else {
+      btnLangBn?.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-950', 'dark:text-white', 'shadow-xs');
+      btnLangBn?.classList.remove('text-slate-500', 'dark:text-slate-400');
+      btnLangEn?.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-950', 'dark:text-white', 'shadow-xs');
+      btnLangEn?.classList.add('text-slate-500', 'dark:text-slate-400');
+
+      if (shopLabel) shopLabel.textContent = 'শপ';
+    }
+
+    // Update Nav Items
+    document.querySelectorAll('.nav-link-item').forEach(el => {
+      const text = lang === 'EN' ? el.getAttribute('data-en') : el.getAttribute('data-bn');
+      if (text) {
+        el.textContent = text;
+      }
+    });
+  }
+
+  btnLangEn?.addEventListener('click', () => applyLanguage('EN'));
+  btnLangBn?.addEventListener('click', () => applyLanguage('BN'));
+  applyLanguage(currentLang);
+
+  // ================= FULLSCREEN MENU LOGIC =================
+  const menuToggleBtn = document.getElementById('menu-toggle-btn');
+  const menuCloseBtn = document.getElementById('menu-close-btn');
+  const overlay = document.getElementById('fullscreen-menu-overlay');
+  const closeTriggers = document.querySelectorAll('.menu-close-trigger');
+
+  function openMenu() {
+    overlay?.classList.remove('opacity-0', 'pointer-events-none');
+    overlay?.classList.add('opacity-100', 'pointer-events-auto');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    overlay?.classList.remove('opacity-100', 'pointer-events-auto');
+    overlay?.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+
+  menuToggleBtn?.addEventListener('click', openMenu);
+  menuCloseBtn?.addEventListener('click', closeMenu);
+
+  closeTriggers.forEach(el => {
+    el.addEventListener('click', closeMenu);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+</script>

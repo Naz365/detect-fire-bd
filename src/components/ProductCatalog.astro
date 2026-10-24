@@ -1,0 +1,259 @@
+---
+import { products } from '../data/products';
+
+const individualProducts = products.filter(p => p.category !== 'combo');
+
+const categories = [
+  { id: 'all', name: 'সকল পণ্য' },
+  { id: 'extinguisher', name: 'ফায়ার এক্সটিংগুইশার' },
+  { id: 'gear', name: 'সেফটি গিয়ার ও পিপিই' },
+  { id: 'sensor', name: 'স্মোক ও গ্যাস সেন্সর' },
+  { id: 'panel', name: 'কন্ট্রোল প্যানেল ও বেল' }
+];
+---
+<section id="products" class="py-16 sm:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Heading -->
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider mb-3">
+        <span>🛡️ প্রিমিয়াম সেফটি প্রোডাক্টস</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+        আপনার প্রয়োজনীয় ফায়ার ও সেফটি আইটেম বেছে নিন
+      </h2>
+      <p class="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+        প্রতিটি পণ্য বিএসটিআই ও সিভিল ডিফেন্স মানসম্মত, পরীক্ষিত এবং দীর্ঘমেয়াদী সুরক্ষার প্রতিশ্রুতিবদ্ধ।
+      </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-8" id="category-tabs">
+        {categories.map((cat, i) => (
+          <button 
+            type="button" 
+            data-category={cat.id}
+            class={`category-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${i === 0 ? 'bg-red-600 text-white shadow-md' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+          >
+            {cat.name}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="products-grid">
+      {individualProducts.map((product) => (
+        <div 
+          data-category={product.category}
+          class="product-item-card rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+        >
+          <div>
+            <!-- Image & Tag Container -->
+            <div class="relative bg-slate-50 p-6 flex items-center justify-center border-b border-slate-100 h-64 overflow-hidden">
+              {product.tag && (
+                <span class="absolute top-3 left-3 bg-red-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-md shadow-xs z-10">
+                  {product.tag}
+                </span>
+              )}
+              <span class="absolute top-3 right-3 bg-slate-200/80 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded z-10">
+                {product.categoryName}
+              </span>
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                class="max-h-52 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-5 sm:p-6">
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 group-hover:text-red-600 transition-colors leading-snug">
+                {product.name}
+              </h3>
+              <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                {product.description}
+              </p>
+
+              <!-- Specifications Bullet Points -->
+              <div class="mt-4 pt-4 border-t border-slate-100 space-y-1.5">
+                {product.specs.slice(0, 3).map((spec) => (
+                  <div class="flex items-start gap-2 text-[11px] text-slate-600 leading-tight">
+                    <span class="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span>{spec}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Price & Order Action -->
+          <div class="p-5 sm:p-6 pt-0 mt-2 bg-slate-50/60 border-t border-slate-100">
+            <div class="flex items-baseline justify-between py-3">
+              <div>
+                <span class="text-[11px] text-slate-400 block">পূর্বমূল্য: <del>৳{product.regularPrice.toLocaleString('bn-BD')}</del></span>
+                <span class="text-xl font-black text-red-600">৳{product.salePrice.toLocaleString('bn-BD')}</span>
+              </div>
+              <span class="text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                ইন-স্টক
+              </span>
+            </div>
+
+            <button 
+              type="button" 
+              onclick={`window.selectProductAndCheckout('${product.id}')`}
+              class="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-red-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-all shadow-sm hover:shadow-md cursor-pointer"
+            >
+              <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span>অর্ডারে সিলেক্ট করুন</span>
+            </button>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Category Filtering & Dynamic Firestore Products Client Script -->
+<script>
+  import { db } from '../lib/firebase';
+  import { collection, getDocs } from 'firebase/firestore';
+
+  const tabButtons = document.querySelectorAll('.category-tab-btn');
+  const productsGrid = document.getElementById('products-grid');
+
+  function attachTabListeners() {
+    const tabs = document.querySelectorAll('.category-tab-btn');
+    const cards = document.querySelectorAll('.product-item-card');
+
+    tabs.forEach(btn => {
+      btn.onclick = () => {
+        tabs.forEach(b => {
+          b.classList.remove('bg-red-600', 'text-white', 'shadow-md');
+          b.classList.add('bg-slate-100', 'text-slate-700');
+        });
+        btn.classList.add('bg-red-600', 'text-white', 'shadow-md');
+        btn.classList.remove('bg-slate-100', 'text-slate-700');
+
+        const targetCategory = btn.getAttribute('data-category');
+
+        cards.forEach(card => {
+          const itemCategory = card.getAttribute('data-category');
+          if (targetCategory === 'all' || itemCategory === targetCategory) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      };
+    });
+  }
+
+  attachTabListeners();
+
+  // Dynamically load newly added products from Firestore
+  async function syncFirestoreProducts() {
+    try {
+      const snap = await getDocs(collection(db, 'products'));
+      if (snap.empty) return;
+
+      const firestoreProducts: any[] = [];
+      snap.forEach(doc => {
+        const data = doc.data();
+        if (data.category !== 'combo') {
+          firestoreProducts.push({ id: doc.id, ...data });
+        }
+      });
+
+      // Find any newly added products not already in static DOM
+      const existingIds = new Set(
+        Array.from(document.querySelectorAll('.product-item-card')).map(el => {
+          const btn = el.querySelector('button');
+          const onclickAttr = btn?.getAttribute('onclick') || '';
+          const match = onclickAttr.match(/'([^']+)'/);
+          return match ? match[1] : '';
+        })
+      );
+
+      firestoreProducts.forEach(product => {
+        if (!existingIds.has(product.id) && productsGrid) {
+          const card = document.createElement('div');
+          card.setAttribute('data-category', product.category);
+          card.className = 'product-item-card rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1';
+          
+          const specsHtml = (product.specs || []).slice(0, 3).map((s: string) => `
+            <div class="flex items-start gap-2 text-[11px] text-slate-600 leading-tight">
+              <span class="text-emerald-500 font-bold shrink-0">✓</span>
+              <span>${s}</span>
+            </div>
+          `).join('');
+
+          card.innerHTML = `
+            <div>
+              <div class="relative bg-slate-50 p-6 flex items-center justify-center border-b border-slate-100 h-64 overflow-hidden">
+                ${product.tag ? `<span class="absolute top-3 left-3 bg-red-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-md shadow-xs z-10">${product.tag}</span>` : ''}
+                <span class="absolute top-3 right-3 bg-slate-200/80 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded z-10">
+                  ${product.categoryName || 'সেফটি'}
+                </span>
+                <img 
+                  src="${product.image || '/images/products/extinguisher-abc.jpg'}" 
+                  alt="${product.name}" 
+                  class="max-h-52 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="p-5 sm:p-6">
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 group-hover:text-red-600 transition-colors leading-snug">
+                  ${product.name}
+                </h3>
+                <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                  ${product.description || ''}
+                </p>
+
+                <div class="mt-4 pt-4 border-t border-slate-100 space-y-1.5">
+                  ${specsHtml}
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 sm:p-6 pt-0 mt-2 bg-slate-50/60 border-t border-slate-100">
+              <div class="flex items-baseline justify-between py-3">
+                <div>
+                  <span class="text-[11px] text-slate-400 block">পূর্বমূল্য: <del>৳${product.regularPrice}</del></span>
+                  <span class="text-xl font-black text-red-600">৳${product.salePrice}</span>
+                </div>
+                <span class="text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                  নতুন স্টক
+                </span>
+              </div>
+
+              <button 
+                type="button" 
+                onclick="window.selectProductAndCheckout('${product.id}')"
+                class="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-red-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-all shadow-sm hover:shadow-md cursor-pointer"
+              >
+                <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                <span>অর্ডারে সিলেক্ট করুন</span>
+              </button>
+            </div>
+          `;
+
+          productsGrid.prepend(card);
+        }
+      });
+
+      attachTabListeners();
+    } catch (err) {
+      console.warn('Live products sync notice:', err);
+    }
+  }
+
+  syncFirestoreProducts();
+</script>

@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import UrgencyBanner from '../components/UrgencyBanner.astro';
+import ComboSection from '../components/ComboSection.astro';
+import ProductCatalog from '../components/ProductCatalog.astro';
+import PassGuide from '../components/PassGuide.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import CheckoutForm from '../components/CheckoutForm.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActions from '../components/FloatingActions.astro';
+import OrderSuccessModal from '../components/OrderSuccessModal.astro';
+---
+
+<Layout 
+  title="রিটেইল অনলাইন শপ | Detect Fire BD | ক্যাশ অন ডেলিভারি"
+  description="বাসাবাড়ি, দোকান ও কারখানার জন্য ৩ কেজি ও ৫ কেজি ফায়ার এক্সটিংগুইশার, পিপিই সেফটি গিয়ার ও স্মোক ডিটেক্টর। দ্রুত ক্যাশ অন ডেলিভারিতে অর্ডার করুন।"
+>
+  <!-- Top Urgent Notification Bar -->
+  <AnnouncementBar />
+
+  <!-- Sticky Navbar -->
+  <Navbar />
+
+  <!-- Hero Section (chumuk.store sales funnel style) -->
+  <Hero />
+
+  <!-- Urgency & Hazard Awareness Banner -->
+  <UrgencyBanner />
+
+  <!-- Special Combo Deals -->
+  <ComboSection />
+
+  <!-- Individual Products Showcase with Category Filters & Firestore Sync -->
+  <ProductCatalog />
+
+  <!-- Educational PASS Technique Guide -->
+  <PassGuide />
+
+  <!-- Trust, Certifications & Warranty Badges -->
+  <TrustBadges />
+
+  <!-- The One-Click Cash On Delivery Checkout Form -->
+  <CheckoutForm />
+
+  <!-- Frequently Asked Questions Accordion -->
+  <FAQ />
+
+  <!-- Footer with Facebook Link and Contact Details -->
+  <Footer />
+
+  <!-- Floating Mobile/Desktop WhatsApp & Call CTA -->
+  <FloatingActions />
+
+  <!-- Order Success Notification Modal -->
+  <OrderSuccessModal />
+</Layout>

@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Detect Fire Engineering BD | Fire Safety & Industrial Protection",
+  description = "Bangladesh's trusted fire safety engineering partner. Fire Hydrant, Automatic Sprinkler, Addressable Fire Alarm Panels, Civil Defense Compliance & 1-Click Retail Store."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- High-Resolution Favicons -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="/favicon.png" />
+
+  <!-- Google Font: Hind Siliguri for modern, crisp typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Anti-FOUC Theme Initialization Script -->
+  <script is:inline>
+    (function() {
+      const storedTheme = localStorage.getItem('detect_fire_theme');
+      if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-red-500 selection:text-white transition-colors duration-200">
+  <slot />
+</body>
+</html>

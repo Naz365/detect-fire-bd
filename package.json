@@ -1,0 +1,19 @@
+{
+  "name": "detect-fire-website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@lucide/astro": "^1.61.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.2",
+    "firebase": "^13.1.0",
+    "lucide-astro": "^0.556.0",
+    "tailwindcss": "^4.3.3"
+  }
+}

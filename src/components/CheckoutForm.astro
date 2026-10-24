@@ -1,0 +1,450 @@
+---
+import { products } from '../data/products';
+---
+<section id="checkout-section" class="py-16 sm:py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title (chumuk.store style) -->
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider mb-2">
+        <span>⚡ সহজ ও দ্রুত অর্ডার</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+        অর্ডার করতে সঠিক তথ্য দিয়ে <span class="text-red-600">নিচের ফর্মটি পূরণ করুন</span>
+      </h2>
+      <p class="mt-2 text-slate-600 text-xs sm:text-sm">
+        ক্যাশ অন ডেলিভারি সুবিধা—পণ্য হাতে পেয়ে চেক করে টাকা পরিশোধ করবেন। কোনো অগ্রিম পেমেন্টের প্রয়োজন নেই।
+      </p>
+    </div>
+
+    <!-- Main Checkout Box -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden p-6 sm:p-10">
+      <form id="fire-order-form" class="space-y-8">
+        
+        <!-- STEP 1: Product Selection -->
+        <div>
+          <label class="block text-sm font-bold text-slate-900 mb-3 flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs">১</span>
+              <span>পণ্য বা প্যাকেজ নির্বাচন করুন:</span>
+            </span>
+            <span class="text-xs text-red-600 font-semibold">* যেকোনো ১টি সিলেক্ট করুন</span>
+          </label>
+
+          <!-- Radio Products Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[440px] overflow-y-auto p-1 border border-slate-200 rounded-2xl bg-slate-50/50" id="product-selection-container">
+            {products.map((item, idx) => (
+              <label 
+                data-product-id={item.id}
+                class={`product-radio-label relative flex items-center gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all ${idx === 0 ? 'border-red-600 bg-red-50/40 ring-2 ring-red-500/20' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+              >
+                <input 
+                  type="radio" 
+                  name="selected_product" 
+                  value={item.id} 
+                  data-name={item.name}
+                  data-price={item.salePrice}
+                  checked={idx === 0}
+                  class="w-4 h-4 text-red-600 accent-red-600 focus:ring-red-500 shrink-0" 
+                />
+
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  class="w-14 h-14 object-contain rounded-lg bg-white p-1 border border-slate-100 shrink-0" 
+                />
+
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-xs font-bold text-slate-900 leading-tight">
+                      {item.name}
+                    </span>
+                    {item.tag && (
+                      <span class="text-[9px] font-extrabold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">
+                        {item.tag}
+                      </span>
+                    )}
+                  </div>
+                  <div class="mt-1 flex items-baseline gap-2">
+                    <span class="text-sm font-extrabold text-red-600">
+                      ৳{item.salePrice.toLocaleString('bn-BD')}
+                    </span>
+                    <span class="text-[11px] text-slate-400 line-through">
+                      ৳{item.regularPrice.toLocaleString('bn-BD')}
+                    </span>
+                  </div>
+                </div>
+              </label>
+            ))}
+          </div>
+
+          <!-- Quantity Selector -->
+          <div class="mt-4 flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-700">পরিমাণ (Quantity):</span>
+            <div class="flex items-center gap-3">
+              <button 
+                type="button" 
+                id="qty-decrease" 
+                class="w-9 h-9 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center cursor-pointer transition active:scale-95"
+              >
+                -
+              </button>
+              <span id="qty-display" class="w-8 text-center font-extrabold text-base text-slate-900">
+                ১
+              </span>
+              <button 
+                type="button" 
+                id="qty-increase" 
+                class="w-9 h-9 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center cursor-pointer transition active:scale-95"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Customer Details -->
+        <div>
+          <label class="block text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs">২</span>
+            <span>আপনার ডেলিভারি তথ্য দিন:</span>
+          </label>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Full Name -->
+            <div class="sm:col-span-2">
+              <label for="cust-name" class="block text-xs font-bold text-slate-700 mb-1">
+                আপনার নাম *
+              </label>
+              <input 
+                type="text" 
+                id="cust-name" 
+                name="customer_name" 
+                required 
+                placeholder="যেমন: মোঃ রফিকুল ইসলাম" 
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
+              />
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="sm:col-span-1">
+              <label for="cust-phone" class="block text-xs font-bold text-slate-700 mb-1">
+                মোবাইল নম্বর * (১১ ডিজিট)
+              </label>
+              <input 
+                type="tel" 
+                id="cust-phone" 
+                name="customer_phone" 
+                required 
+                pattern="^(01)[3-9][0-9]{8}$"
+                placeholder="যেমন: 01320580632" 
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition font-mono"
+              />
+            </div>
+
+            <!-- Delivery Location -->
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                ডেলিভারি এলাকা *
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
+                  <input type="radio" name="shipping_location" value="dhaka" data-cost="70" checked class="accent-red-600" />
+                  <div class="text-xs">
+                    <span class="font-bold text-slate-800 block">ঢাকার ভেতরে</span>
+                    <span class="text-red-600 font-semibold">৳৭০</span>
+                  </div>
+                </label>
+
+                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
+                  <input type="radio" name="shipping_location" value="outside" data-cost="130" class="accent-red-600" />
+                  <div class="text-xs">
+                    <span class="font-bold text-slate-800 block">ঢাকার বাইরে</span>
+                    <span class="text-red-600 font-semibold">৳১৩০</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Full Address -->
+            <div class="sm:col-span-2">
+              <label for="cust-address" class="block text-xs font-bold text-slate-700 mb-1">
+                পূর্ণ ঠিকানা (বাসা/রোড/থানা/উপজেলা/জেলা) *
+              </label>
+              <textarea 
+                id="cust-address" 
+                name="customer_address" 
+                rows="2" 
+                required 
+                placeholder="যেমন: বাসা নং ১২, রোড নং ৫, সেক্টর ৭, উত্তরা, ঢাকা" 
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Order Summary & Total -->
+        <div class="rounded-2xl bg-slate-900 text-white p-5 sm:p-6 space-y-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 flex items-center justify-between">
+            <span>অর্ডার সামারি (Order Summary)</span>
+            <span class="text-emerald-400 flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              ক্যাশ অন ডেলিভারি
+            </span>
+          </div>
+
+          <div class="space-y-1.5 text-xs sm:text-sm">
+            <div class="flex justify-between text-slate-300">
+              <span>সিলেক্টেড প্রোডাক্ট:</span>
+              <span id="summary-prod-name" class="font-semibold text-right max-w-[200px] sm:max-w-xs truncate text-white">
+                হোম ও কিচেন সেফটি কম্বো
+              </span>
+            </div>
+
+            <div class="flex justify-between text-slate-300">
+              <span>পরিমাণ:</span>
+              <span id="summary-qty" class="font-semibold text-white">১টি</span>
+            </div>
+
+            <div class="flex justify-between text-slate-300">
+              <span>প্রোডাক্ট সাবটোটাল:</span>
+              <span id="summary-subtotal" class="font-semibold text-white">৳২,৯৫০</span>
+            </div>
+
+            <div class="flex justify-between text-slate-300">
+              <span>ডেলিভারি চার্জ:</span>
+              <span id="summary-shipping" class="font-semibold text-white">৳৭০</span>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 flex items-baseline justify-between text-base sm:text-xl font-bold">
+            <span class="text-slate-100">সর্বমোট প্রদেয় টাকা:</span>
+            <span id="summary-total" class="text-2xl font-black text-amber-400">৳৩,০২০</span>
+          </div>
+
+          <p class="text-[11px] text-slate-400 pt-1">
+            * পার্সেল পাওয়ার পর মূল্য পরিশোধ করবেন। কোনো অগ্রিম চার্জ নেই।
+          </p>
+        </div>
+
+        <!-- Action Submit Buttons -->
+        <div class="space-y-3 pt-2">
+          <!-- Primary Form Submission -->
+          <button 
+            type="submit" 
+            id="order-submit-btn"
+            class="w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold text-base sm:text-lg py-4 px-6 rounded-2xl shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all transform active:scale-[0.99] cursor-pointer"
+          >
+            <svg class="w-6 h-6 text-yellow-300 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
+          </button>
+
+          <!-- WhatsApp Direct Order Alternative -->
+          <button 
+            type="button" 
+            id="whatsapp-order-btn"
+            class="w-full inline-flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base py-3.5 px-6 rounded-2xl shadow-md transition-all active:scale-[0.99] cursor-pointer"
+          >
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            <span>হোয়াটসঅ্যাপে সরাসরি অর্ডার করুন</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- Client Script for Real-Time Price Calculation, Radio Selection, and WhatsApp Order -->
+<script>
+  import { db } from '../lib/firebase';
+  import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+  let currentQty = 1;
+  const targetWhatsAppNumber = "8801320580632"; // Detect Fire Official WhatsApp
+
+  const form = document.getElementById('fire-order-form') as HTMLFormElement;
+  const radioLabels = document.querySelectorAll('.product-radio-label');
+  const qtyDisplay = document.getElementById('qty-display');
+  const qtyInc = document.getElementById('qty-increase');
+  const qtyDec = document.getElementById('qty-decrease');
+
+  const summaryProdName = document.getElementById('summary-prod-name');
+  const summaryQty = document.getElementById('summary-qty');
+  const summarySubtotal = document.getElementById('summary-subtotal');
+  const summaryShipping = document.getElementById('summary-shipping');
+  const summaryTotal = document.getElementById('summary-total');
+
+  function calculateTotals() {
+    const selectedRadio = document.querySelector('input[name="selected_product"]:checked') as HTMLInputElement;
+    if (!selectedRadio) return;
+
+    const prodName = selectedRadio.getAttribute('data-name') || '';
+    const unitPrice = parseInt(selectedRadio.getAttribute('data-price') || '0', 10);
+
+    const shippingRadio = document.querySelector('input[name="shipping_location"]:checked') as HTMLInputElement;
+    const shippingCost = parseInt(shippingRadio?.getAttribute('data-cost') || '70', 10);
+
+    const subtotal = unitPrice * currentQty;
+    const grandTotal = subtotal + shippingCost;
+
+    // Update labels
+    if (summaryProdName) summaryProdName.textContent = prodName;
+    if (summaryQty) summaryQty.textContent = `${currentQty}টি`;
+    if (summarySubtotal) summarySubtotal.textContent = `৳${subtotal.toLocaleString('bn-BD')}`;
+    if (summaryShipping) summaryShipping.textContent = `৳${shippingCost.toLocaleString('bn-BD')}`;
+    if (summaryTotal) summaryTotal.textContent = `৳${grandTotal.toLocaleString('bn-BD')}`;
+    if (qtyDisplay) qtyDisplay.textContent = currentQty.toString();
+
+    // Update card styling
+    radioLabels.forEach(lbl => {
+      const radio = lbl.querySelector('input[type="radio"]') as HTMLInputElement;
+      if (radio && radio.checked) {
+        lbl.classList.add('border-red-600', 'bg-red-50/40', 'ring-2', 'ring-red-500/20');
+        lbl.classList.remove('border-slate-200', 'bg-white');
+      } else {
+        lbl.classList.remove('border-red-600', 'bg-red-50/40', 'ring-2', 'ring-red-500/20');
+        lbl.classList.add('border-slate-200', 'bg-white');
+      }
+    });
+  }
+
+  // Radio selection change
+  document.querySelectorAll('input[name="selected_product"]').forEach(r => {
+    r.addEventListener('change', calculateTotals);
+  });
+
+  // Shipping selection change
+  document.querySelectorAll('input[name="shipping_location"]').forEach(r => {
+    r.addEventListener('change', calculateTotals);
+  });
+
+  // Quantity handlers
+  qtyInc?.addEventListener('click', () => {
+    if (currentQty < 20) {
+      currentQty++;
+      calculateTotals();
+    }
+  });
+
+  qtyDec?.addEventListener('click', () => {
+    if (currentQty > 1) {
+      currentQty--;
+      calculateTotals();
+    }
+  });
+
+  // Global helper to select product from catalog or combo cards
+  (window as any).selectProductAndCheckout = function(productId: string) {
+    const radio = document.querySelector(`input[name="selected_product"][value="${productId}"]`) as HTMLInputElement;
+    if (radio) {
+      radio.checked = true;
+      calculateTotals();
+
+      const label = radio.closest('.product-radio-label');
+      label?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Smooth scroll to the checkout section
+      const checkoutSection = document.getElementById('checkout-section');
+      checkoutSection?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // WhatsApp Order Button
+  const waBtn = document.getElementById('whatsapp-order-btn');
+  waBtn?.addEventListener('click', () => {
+    const nameInput = (document.getElementById('cust-name') as HTMLInputElement)?.value.trim();
+    const phoneInput = (document.getElementById('cust-phone') as HTMLInputElement)?.value.trim();
+    const addressInput = (document.getElementById('cust-address') as HTMLTextAreaElement)?.value.trim();
+
+    const selectedRadio = document.querySelector('input[name="selected_product"]:checked') as HTMLInputElement;
+    const prodName = selectedRadio?.getAttribute('data-name') || '';
+    const unitPrice = parseInt(selectedRadio?.getAttribute('data-price') || '0', 10);
+
+    const shippingRadio = document.querySelector('input[name="shipping_location"]:checked') as HTMLInputElement;
+    const shippingCost = parseInt(shippingRadio?.getAttribute('data-cost') || '70', 10);
+    const shippingArea = shippingRadio?.value === 'dhaka' ? 'ঢাকার ভেতরে (৳৭০)' : 'ঢাকার বাইরে (৳১৩০)';
+
+    const subtotal = unitPrice * currentQty;
+    const grandTotal = subtotal + shippingCost;
+
+    let text = `*নতুন অর্ডার (Detect Fire Engineering BD)*\n`;
+    text += `---------------------------------\n`;
+    text += `*পণ্য:* ${prodName}\n`;
+    text += `*পরিমাণ:* ${currentQty}টি\n`;
+    text += `*সাবটোটাল:* ৳${subtotal}\n`;
+    text += `*ডেলিভারি এরিয়া:* ${shippingArea}\n`;
+    text += `*সর্বমোট বিল:* ৳${grandTotal}\n`;
+    text += `*পেমেন্ট পদ্ধতি:* ক্যাশ অন ডেলিভারি (Cash on Delivery)\n`;
+    text += `---------------------------------\n`;
+    text += `*কাস্টমার তথ্য:*\n`;
+    text += `নাম: ${nameInput || '[নাম উল্লেখ নেই]'}\n`;
+    text += `মোবাইল: ${phoneInput || '[মোবাইল উল্লেখ নেই]'}\n`;
+    text += `ঠিকানা: ${addressInput || '[ঠিকানা উল্লেখ নেই]'}\n`;
+
+    const waUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, '_blank');
+  });
+
+  // Regular Form Submit Event
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = (document.getElementById('cust-name') as HTMLInputElement).value;
+    const phone = (document.getElementById('cust-phone') as HTMLInputElement).value;
+    const address = (document.getElementById('cust-address') as HTMLTextAreaElement).value;
+
+    const selectedRadio = document.querySelector('input[name="selected_product"]:checked') as HTMLInputElement;
+    const prodName = selectedRadio.getAttribute('data-name');
+    const unitPrice = parseInt(selectedRadio.getAttribute('data-price') || '0', 10);
+    const shippingRadio = document.querySelector('input[name="shipping_location"]:checked') as HTMLInputElement;
+    const shippingCost = parseInt(shippingRadio?.getAttribute('data-cost') || '70', 10);
+    const grandTotal = (unitPrice * currentQty) + shippingCost;
+
+    const orderId = 'DF-' + Math.floor(100000 + Math.random() * 900000);
+
+    // Save order record to Cloud Firestore
+    try {
+      addDoc(collection(db, 'orders'), {
+        orderId,
+        customerName: name,
+        phone,
+        address,
+        productName: prodName,
+        quantity: currentQty,
+        totalAmount: grandTotal,
+        shippingCost,
+        shippingArea: shippingRadio?.value || 'dhaka',
+        createdAt: serverTimestamp(),
+        status: 'pending'
+      }).catch(err => console.warn('Firestore order sync:', err));
+    } catch (e) {
+      console.warn('Order sync exception:', e);
+    }
+
+    // Trigger Success Modal
+    if ((window as any).showOrderSuccessModal) {
+      (window as any).showOrderSuccessModal({
+        orderId,
+        name,
+        phone,
+        address,
+        prodName,
+        qty: currentQty,
+        grandTotal
+      });
+    }
+
+    form.reset();
+    currentQty = 1;
+    calculateTotals();
+  });
+
+  // Initial Calculation on load
+  calculateTotals();
+</script>
