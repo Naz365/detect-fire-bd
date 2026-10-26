@@ -17,15 +17,15 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
   <Navbar />
 
   <!-- Blog Hero -->
-  <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white py-16 sm:py-24 border-b border-slate-800">
+  <section class="bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-white py-16 sm:py-24 border-b border-slate-200 dark:border-slate-800 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/80 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider mb-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider mb-4">
         <span>📖 নলেজ হাব ও সেফটি রিসোর্স</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
         ফায়ার সেফটি, ইঞ্জিনিয়ারিং ও কমপ্লায়েন্স ব্লগ
       </h1>
-      <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+      <p class="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
         অগ্নিকাণ্ড প্রতিরোধ, আধুনিক ডিটেকশন প্রযুক্তি এবং বাংলাদেশ সিভিল ডিফেন্সের নিয়মাবলী সম্পর্কিত প্রয়োজনীয় আর্টিকেল ও গাইড।
       </p>
 
@@ -35,7 +35,7 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
           <button 
             type="button" 
             data-cat={cat}
-            class={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer blog-filter-btn ${idx === 0 ? 'bg-red-600 text-white shadow-md' : 'bg-slate-800/80 hover:bg-slate-800 text-slate-300'}`}
+            class={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer blog-filter-btn ${idx === 0 ? 'bg-red-600 text-white shadow-md' : 'bg-slate-200/80 hover:bg-slate-300 dark:bg-slate-800/80 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'}`}
           >
             {cat}
           </button>
@@ -45,7 +45,7 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
   </section>
 
   <!-- Blog Listing Grid -->
-  <section class="py-16 sm:py-24 bg-slate-50 min-h-[60vh]">
+  <section class="py-16 sm:py-24 bg-slate-50 dark:bg-slate-950 min-h-[60vh] transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Grid Container -->
@@ -53,10 +53,10 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
         {defaultBlogPosts.map((post) => (
           <article 
             data-category={post.category}
-            class="blog-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
+            class="blog-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
           >
             <div>
-              <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <div class="relative h-56 bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <img 
                   src={post.featuredImage} 
                   alt={post.title} 
@@ -69,27 +69,27 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
               </div>
 
               <div class="p-6 sm:p-7">
-                <div class="flex items-center gap-2 text-xs text-slate-400 mb-3">
+                <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 mb-3">
                   <span>{post.publishedAt}</span>
                   <span>•</span>
                   <span>{post.readTime}</span>
                 </div>
 
-                <h2 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-red-600 transition-colors leading-snug">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors leading-snug">
                   <a href={`/blog/${post.slug}`}>{post.title}</a>
                 </h2>
 
-                <p class="text-xs sm:text-sm text-slate-600 mt-3 line-clamp-3 leading-relaxed">
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 line-clamp-3 leading-relaxed">
                   {post.metaDescription}
                 </p>
               </div>
             </div>
 
-            <div class="p-6 sm:p-7 pt-0 flex items-center justify-between border-t border-slate-100 mt-2">
-              <span class="text-xs text-slate-400 font-medium">লেখক: {post.author.split(' ')[0]}</span>
+            <div class="p-6 sm:p-7 pt-0 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 mt-2">
+              <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">লেখক: {post.author.split(' ')[0]}</span>
               <a 
                 href={`/blog/${post.slug}`} 
-                class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-red-600 hover:text-red-700 group-hover:translate-x-0.5 transition-transform"
+                class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 group-hover:translate-x-0.5 transition-transform"
               >
                 <span>সম্পূর্ণ পড়ুন</span>
                 <span>→</span>
@@ -100,7 +100,7 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
       </div>
 
       <!-- Live Dynamic Firestore Sync Notice -->
-      <div id="dynamic-blogs-notice" class="hidden mt-8 text-center text-xs text-slate-500">
+      <div id="dynamic-blogs-notice" class="hidden mt-8 text-center text-xs text-slate-500 dark:text-slate-400">
         ডাটাবেস থেকে অতিরিক্ত নতুন আর্টিকেল যুক্ত হয়েছে
       </div>
 
@@ -146,10 +146,10 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
     btn.addEventListener('click', () => {
       filterButtons.forEach(b => {
         b.classList.remove('bg-red-600', 'text-white', 'shadow-md');
-        b.classList.add('bg-slate-800/80', 'text-slate-300');
+        b.classList.add('bg-slate-200/80', 'text-slate-700', 'dark:bg-slate-800/80', 'dark:text-slate-300');
       });
       btn.classList.add('bg-red-600', 'text-white', 'shadow-md');
-      btn.classList.remove('bg-slate-800/80', 'text-slate-300');
+      btn.classList.remove('bg-slate-200/80', 'text-slate-700', 'dark:bg-slate-800/80', 'dark:text-slate-300');
 
       const target = btn.getAttribute('data-cat');
       blogCards.forEach(card => {
@@ -180,10 +180,10 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
         if (!existingSlugs.has(path) && grid) {
           const article = document.createElement('article');
           article.setAttribute('data-category', data.category || 'সাধারণ');
-          article.className = 'blog-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5';
+          article.className = 'blog-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5';
           article.innerHTML = `
             <div>
-              <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <div class="relative h-56 bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <img 
                   src="${data.featuredImage || '/images/products/extinguisher-abc.jpg'}" 
                   alt="${data.title}" 
@@ -196,27 +196,27 @@ const categories = ['সকল', 'পণ্য গাইড', 'কমপ্ল�
               </div>
 
               <div class="p-6 sm:p-7">
-                <div class="flex items-center gap-2 text-xs text-slate-400 mb-3">
+                <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 mb-3">
                   <span>${data.publishedAt || 'আজ'}</span>
                   <span>•</span>
                   <span>${data.readTime || '৫ মিনিট'}</span>
                 </div>
 
-                <h2 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-red-600 transition-colors leading-snug">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors leading-snug">
                   <a href="/blog/${data.slug}">${data.title}</a>
                 </h2>
 
-                <p class="text-xs sm:text-sm text-slate-600 mt-3 line-clamp-3 leading-relaxed">
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 line-clamp-3 leading-relaxed">
                   ${data.metaDescription || ''}
                 </p>
               </div>
             </div>
 
-            <div class="p-6 sm:p-7 pt-0 flex items-center justify-between border-t border-slate-100 mt-2">
-              <span class="text-xs text-slate-400 font-medium">লেখক: ${(data.author || 'Detect Fire').split(' ')[0]}</span>
+            <div class="p-6 sm:p-7 pt-0 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 mt-2">
+              <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">লেখক: ${(data.author || 'Detect Fire').split(' ')[0]}</span>
               <a 
                 href="/blog/${data.slug}" 
-                class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-red-600 hover:text-red-700 group-hover:translate-x-0.5 transition-transform"
+                class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 group-hover:translate-x-0.5 transition-transform"
               >
                 <span>সম্পূর্ণ পড়ুন</span>
                 <span>→</span>

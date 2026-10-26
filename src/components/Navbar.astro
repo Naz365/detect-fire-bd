@@ -168,21 +168,21 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
 <!-- ================= FULL-SCREEN LUXURY EXECUTIVE MENU ================= -->
 <div 
   id="fullscreen-menu-overlay" 
-  class="fixed inset-0 z-50 bg-slate-950/98 backdrop-blur-2xl text-white opacity-0 pointer-events-none transition-all duration-300 flex flex-col justify-between overflow-y-auto"
+  class="fixed inset-0 z-50 bg-white/98 dark:bg-slate-950/98 backdrop-blur-2xl text-slate-900 dark:text-white opacity-0 pointer-events-none transition-all duration-300 flex flex-col justify-between overflow-y-auto"
 >
   
   <!-- Overlay Header -->
-  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between border-b border-slate-800/80 shrink-0">
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 shrink-0">
     <!-- Brand Logo in Menu -->
     <a href="/" class="flex items-center gap-3.5">
       <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-red-500 bg-white p-1 flex items-center justify-center shrink-0">
         <img src="/images/logo.png" alt="Detect Fire" class="w-full h-full object-contain" />
       </div>
       <div class="flex flex-col">
-        <span class="text-xl font-black tracking-tight text-white">
+        <span class="text-xl font-black tracking-tight text-slate-950 dark:text-white">
           DETECT <span class="text-red-500">FIRE</span>
         </span>
-        <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+        <span class="text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
           Engineering BD
         </span>
       </div>
@@ -193,7 +193,7 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
       <button 
         type="button" 
         id="menu-close-btn"
-        class="w-10 h-10 rounded-full bg-slate-900 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-slate-800 hover:border-red-500 cursor-pointer"
+        class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-600 dark:bg-slate-900 dark:hover:bg-red-600 text-slate-700 dark:text-slate-300 hover:text-white dark:hover:text-white flex items-center justify-center transition-all border border-slate-200 dark:border-slate-800 hover:border-red-500 cursor-pointer"
         aria-label="Close Menu"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,39 +209,39 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
       
       <!-- COLUMN 1: B2B Engineering Solutions -->
       <div class="space-y-4">
-        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+        <div class="flex items-center gap-2 text-red-600 dark:text-red-500 text-xs font-bold uppercase tracking-wider">
           <span>01</span>
           <span class="w-6 h-px bg-red-500/60"></span>
           <span>Engineering</span>
         </div>
-        <h3 class="text-xl font-bold text-white tracking-tight">Corporate Solutions</h3>
-        <ul class="space-y-3 text-sm text-slate-400">
+        <h3 class="text-xl font-bold text-slate-950 dark:text-white tracking-tight">Corporate Solutions</h3>
+        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
           <li>
-            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#services" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Fire Hydrant & Sprinklers</span>
             </a>
           </li>
           <li>
-            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#services" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Central Fire Alarm Panels</span>
             </a>
           </li>
           <li>
-            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#services" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Civil Defense License Audit</span>
             </a>
           </li>
           <li>
-            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#services" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Cylinder Refilling & Hydro-test</span>
             </a>
           </li>
           <li>
-            <a href="/#services" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#services" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Annual Maintenance (AMC)</span>
             </a>
@@ -251,33 +251,33 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
 
       <!-- COLUMN 2: Our Projects -->
       <div class="space-y-4">
-        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+        <div class="flex items-center gap-2 text-red-600 dark:text-red-500 text-xs font-bold uppercase tracking-wider">
           <span>02</span>
           <span class="w-6 h-px bg-red-500/60"></span>
           <span>Portfolio</span>
         </div>
-        <h3 class="text-xl font-bold text-white tracking-tight">Featured Projects</h3>
-        <ul class="space-y-3 text-sm text-slate-400">
+        <h3 class="text-xl font-bold text-slate-950 dark:text-white tracking-tight">Featured Projects</h3>
+        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
           <li>
-            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#projects" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>RMG & Garments Factories</span>
             </a>
           </li>
           <li>
-            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#projects" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Pharma Logistics Hubs</span>
             </a>
           </li>
           <li>
-            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#projects" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Commercial High-Rises</span>
             </a>
           </li>
           <li>
-            <a href="/#projects" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/#projects" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Chemical Warehouses</span>
             </a>
@@ -287,33 +287,33 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
 
       <!-- COLUMN 3: Retail Store & Equipment -->
       <div class="space-y-4">
-        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+        <div class="flex items-center gap-2 text-red-600 dark:text-red-500 text-xs font-bold uppercase tracking-wider">
           <span>03</span>
           <span class="w-6 h-px bg-red-500/60"></span>
           <span>Online Store</span>
         </div>
-        <h3 class="text-xl font-bold text-white tracking-tight">Retail Equipment</h3>
-        <ul class="space-y-3 text-sm text-slate-400">
+        <h3 class="text-xl font-bold text-slate-950 dark:text-white tracking-tight">Retail Equipment</h3>
+        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
           <li>
-            <a href="/store#combos" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/store#combos" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Special Safety Combos</span>
             </a>
           </li>
           <li>
-            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/store#products" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>ABC Dry Powder (3kg & 5kg)</span>
             </a>
           </li>
           <li>
-            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/store#products" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>CO2 Extinguishers (3kg & 5kg)</span>
             </a>
           </li>
           <li>
-            <a href="/store#products" class="hover:text-white transition flex items-center gap-2 group menu-close-trigger">
+            <a href="/store#products" class="hover:text-red-600 dark:hover:text-white transition flex items-center gap-2 group menu-close-trigger">
               <span class="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
               <span>Smoke & LPG Gas Detectors</span>
             </a>
@@ -332,24 +332,24 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
 
       <!-- COLUMN 4: Contact & Portal -->
       <div class="space-y-4">
-        <div class="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
+        <div class="flex items-center gap-2 text-red-600 dark:text-red-500 text-xs font-bold uppercase tracking-wider">
           <span>04</span>
           <span class="w-6 h-px bg-red-500/60"></span>
           <span>Contact</span>
         </div>
-        <h3 class="text-xl font-bold text-white tracking-tight">Hotlines & Support</h3>
+        <h3 class="text-xl font-bold text-slate-950 dark:text-white tracking-tight">Hotlines & Support</h3>
         
-        <div class="space-y-3 text-sm text-slate-300">
-          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
-            <span class="text-[11px] text-red-400 font-bold block">Primary Hotline & WhatsApp (২৪/৭)</span>
-            <a href="tel:+8801914457183" class="font-bold text-white font-mono hover:text-red-400 transition text-base block mt-0.5">+8801914457183</a>
+        <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+          <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+            <span class="text-[11px] text-red-600 dark:text-red-400 font-bold block">Primary Hotline & WhatsApp (২৪/৭)</span>
+            <a href="tel:+8801914457183" class="font-bold text-slate-900 dark:text-white font-mono hover:text-red-600 dark:hover:text-red-400 transition text-base block mt-0.5">+8801914457183</a>
           </div>
 
-          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block font-medium">Corporate & Support Desk</span>
+          <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Corporate & Support Desk</span>
             <div class="flex flex-col gap-1 mt-1">
-              <a href="tel:+8801320580632" class="font-semibold text-slate-300 font-mono hover:text-white transition text-xs">+8801320580632</a>
-              <a href="tel:+8801320580631" class="font-semibold text-slate-300 font-mono hover:text-white transition text-xs">+8801320580631</a>
+              <a href="tel:+8801320580632" class="font-semibold text-slate-700 dark:text-slate-300 font-mono hover:text-red-600 dark:hover:text-white transition text-xs">+8801320580632</a>
+              <a href="tel:+8801320580631" class="font-semibold text-slate-700 dark:text-slate-300 font-mono hover:text-red-600 dark:hover:text-white transition text-xs">+8801320580631</a>
             </div>
           </div>
 
@@ -363,7 +363,7 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
             </a>
             <a 
               href="/admin" 
-              class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold rounded-xl border border-slate-800 transition menu-close-trigger"
+              class="px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 transition menu-close-trigger"
               title="Admin Portal"
             >
               Admin
@@ -377,14 +377,14 @@ import CustomerAuthModal from './CustomerAuthModal.astro';
   </div>
 
   <!-- Overlay Footer Bar -->
-  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 shrink-0">
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 shrink-0">
     <div>
       © 2026 <b>Detect Fire Engineering BD</b>. Fire Safety & Industrial Protection.
     </div>
     <div class="flex items-center gap-6">
-      <span class="text-slate-400">BNBC & NFPA Standards</span>
+      <span class="text-slate-600 dark:text-slate-400">BNBC & NFPA Standards</span>
       <span>•</span>
-      <span class="text-slate-400">Nationwide Delivery & On-Site Installation</span>
+      <span class="text-slate-600 dark:text-slate-400">Nationwide Delivery & On-Site Installation</span>
     </div>
   </div>
 

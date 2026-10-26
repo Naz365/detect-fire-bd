@@ -1,18 +1,18 @@
 ---
 import { comboOffers } from '../data/products';
 ---
-<section id="combos" class="py-16 sm:py-20 bg-slate-100/70 border-y border-slate-200/80">
+<section id="combos" class="py-16 sm:py-20 bg-slate-100/70 dark:bg-slate-950 border-y border-slate-200/80 dark:border-slate-800 transition-colors">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-12">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider mb-3">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 dark:bg-red-950/80 text-red-700 dark:text-red-400 border border-transparent dark:border-red-500/30 text-xs font-bold uppercase tracking-wider mb-3">
         <span>🎁 স্পেশাল সেভিং কম্বো প্যাকেজ</span>
       </div>
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-        একসাথে কিনুন, নিশ্চিত করুন <span class="text-red-600">সর্বোচ্চ সাশ্রয় ও সম্পূর্ণ সুরক্ষা</span>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        একসাথে কিনুন, নিশ্চিত করুন <span class="text-red-600 dark:text-red-500">সর্বোচ্চ সাশ্রয় ও সম্পূর্ণ সুরক্ষা</span>
       </h2>
-      <p class="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+      <p class="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
         আলাদা আলাদা না কিনে প্রয়োজনীয় সবগুলো সেফটি আইটেম পান স্পেশাল ডিসকাউন্ট মূল্যে। বাসা, কারখানা ও অফিসের জন্য তৈরি প্যাকেজ।
       </p>
     </div>
@@ -20,18 +20,18 @@ import { comboOffers } from '../data/products';
     <!-- Combo Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {comboOffers.map((combo, idx) => (
-        <div class={`relative rounded-3xl bg-white border ${combo.popular ? 'border-red-500 shadow-xl ring-2 ring-red-500/20' : 'border-slate-200 shadow-sm'} overflow-hidden flex flex-col justify-between transition-all hover:shadow-2xl hover:-translate-y-1`}>
+        <div class={`relative rounded-3xl bg-white dark:bg-slate-900 border ${combo.popular ? 'border-red-500 shadow-xl ring-2 ring-red-500/20' : 'border-slate-200 dark:border-slate-800 shadow-sm'} overflow-hidden flex flex-col justify-between transition-all hover:shadow-2xl dark:hover:shadow-slate-950 hover:-translate-y-1`}>
           
           <!-- Popular / Tag Ribbon -->
           <div class="absolute top-4 right-4 z-10">
-            <span class={`text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider ${combo.popular ? 'bg-red-600 text-white shadow-md' : 'bg-slate-800 text-slate-100'}`}>
+            <span class={`text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider ${combo.popular ? 'bg-red-600 text-white shadow-md' : 'bg-slate-800 dark:bg-slate-700 text-slate-100'}`}>
               {combo.tag}
             </span>
           </div>
 
           <!-- Product Image & Header -->
           <div>
-            <div class="relative bg-slate-50 p-6 flex items-center justify-center border-b border-slate-100 h-56">
+            <div class="relative bg-slate-50 dark:bg-slate-950/60 p-6 flex items-center justify-center border-b border-slate-100 dark:border-slate-800 h-56">
               <img 
                 src={combo.image} 
                 alt={combo.name} 
@@ -40,23 +40,23 @@ import { comboOffers } from '../data/products';
             </div>
 
             <div class="p-6">
-              <h3 class="text-xl font-bold text-slate-900 leading-snug">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white leading-snug">
                 {combo.name}
               </h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
                 {combo.description}
               </p>
 
               <!-- Feature / Included Items List -->
               <div class="mt-5 space-y-2.5">
-                <div class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                  <span class="text-red-600">📦</span>
+                <div class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="text-red-600 dark:text-red-400">📦</span>
                   <span>প্যাকেজে যা যা পাচ্ছেন:</span>
                 </div>
                 <ul class="space-y-2">
                   {combo.specs.map((item) => (
-                    <li class="flex items-start gap-2 text-xs text-slate-700 leading-tight">
-                      <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300 leading-tight">
+                      <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                       </svg>
                       <span>{item}</span>
@@ -68,13 +68,13 @@ import { comboOffers } from '../data/products';
           </div>
 
           <!-- Pricing & Order Button -->
-          <div class="p-6 pt-0 border-t border-slate-100 mt-4 bg-slate-50/50">
+          <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800 mt-4 bg-slate-50/50 dark:bg-slate-900/40">
             <div class="flex items-baseline justify-between py-4">
               <div>
-                <span class="text-xs text-slate-400 block">রেগুলার মূল্য: <del>৳{combo.regularPrice.toLocaleString('bn-BD')}</del></span>
-                <span class="text-2xl font-black text-red-600">৳{combo.salePrice.toLocaleString('bn-BD')}</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block">রেগুলার মূল্য: <del>৳{combo.regularPrice.toLocaleString('bn-BD')}</del></span>
+                <span class="text-2xl font-black text-red-600 dark:text-red-500">৳{combo.salePrice.toLocaleString('bn-BD')}</span>
               </div>
-              <div class="bg-red-50 text-red-600 border border-red-200 text-xs font-bold px-2.5 py-1 rounded-lg">
+              <div class="bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 text-xs font-bold px-2.5 py-1 rounded-lg">
                 সাশ্রয় ৳{(combo.regularPrice - combo.salePrice).toLocaleString('bn-BD')}
               </div>
             </div>
@@ -97,17 +97,17 @@ import { comboOffers } from '../data/products';
     </div>
 
     <!-- Assurance footer -->
-    <div class="mt-10 text-center text-xs text-slate-500 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+    <div class="mt-10 text-center text-xs text-slate-500 dark:text-slate-400 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
       <span class="flex items-center gap-1.5 font-medium">
-        <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
         সবগুলো আইটেম সম্পূর্ণ নতুন ও ইনট্যাক্ট
       </span>
       <span class="flex items-center gap-1.5 font-medium">
-        <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
         পণ্য দেখে মূল্য পরিশোধ করার নিশ্চয়তা
       </span>
       <span class="flex items-center gap-1.5 font-medium">
-        <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
         সারা দেশে হোম ডেলিভারি
       </span>
     </div>

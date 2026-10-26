@@ -1,42 +1,42 @@
 ---
 import { products } from '../data/products';
 ---
-<section id="checkout-section" class="py-16 sm:py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100">
+<section id="checkout-section" class="py-16 sm:py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-white transition-colors">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Title (chumuk.store style) -->
     <div class="text-center max-w-2xl mx-auto mb-10">
-      <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider mb-2">
+      <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-100 dark:bg-red-950/80 text-red-700 dark:text-red-400 border border-transparent dark:border-red-500/30 text-xs font-bold uppercase tracking-wider mb-2">
         <span>⚡ সহজ ও দ্রুত অর্ডার</span>
       </div>
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-        অর্ডার করতে সঠিক তথ্য দিয়ে <span class="text-red-600">নিচের ফর্মটি পূরণ করুন</span>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        অর্ডার করতে সঠিক তথ্য দিয়ে <span class="text-red-600 dark:text-red-500">নিচের ফর্মটি পূরণ করুন</span>
       </h2>
-      <p class="mt-2 text-slate-600 text-xs sm:text-sm">
+      <p class="mt-2 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
         ক্যাশ অন ডেলিভারি সুবিধা—পণ্য হাতে পেয়ে চেক করে টাকা পরিশোধ করবেন। কোনো অগ্রিম পেমেন্টের প্রয়োজন নেই।
       </p>
     </div>
 
     <!-- Main Checkout Box -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden p-6 sm:p-10">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl overflow-hidden p-6 sm:p-10 transition-colors">
       <form id="fire-order-form" class="space-y-8">
         
         <!-- STEP 1: Product Selection -->
         <div>
-          <label class="block text-sm font-bold text-slate-900 mb-3 flex items-center justify-between">
+          <label class="block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center justify-between">
             <span class="flex items-center gap-2">
               <span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs">১</span>
               <span>পণ্য বা প্যাকেজ নির্বাচন করুন:</span>
             </span>
-            <span class="text-xs text-red-600 font-semibold">* যেকোনো ১টি সিলেক্ট করুন</span>
+            <span class="text-xs text-red-600 dark:text-red-400 font-semibold">* যেকোনো ১টি সিলেক্ট করুন</span>
           </label>
 
           <!-- Radio Products Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[440px] overflow-y-auto p-1 border border-slate-200 rounded-2xl bg-slate-50/50" id="product-selection-container">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[440px] overflow-y-auto p-1 border border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50/50 dark:bg-slate-950/50" id="product-selection-container">
             {products.map((item, idx) => (
               <label 
                 data-product-id={item.id}
-                class={`product-radio-label relative flex items-center gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all ${idx === 0 ? 'border-red-600 bg-red-50/40 ring-2 ring-red-500/20' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+                class={`product-radio-label relative flex items-center gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all ${idx === 0 ? 'border-red-600 bg-red-50/60 dark:bg-red-950/40 ring-2 ring-red-500/20' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700'}`}
               >
                 <input 
                   type="radio" 
@@ -51,25 +51,25 @@ import { products } from '../data/products';
                 <img 
                   src={item.image} 
                   alt={item.name} 
-                  class="w-14 h-14 object-contain rounded-lg bg-white p-1 border border-slate-100 shrink-0" 
+                  class="w-14 h-14 object-contain rounded-lg bg-white dark:bg-slate-800 p-1 border border-slate-100 dark:border-slate-700 shrink-0" 
                 />
 
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-xs font-bold text-slate-900 leading-tight">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white leading-tight">
                       {item.name}
                     </span>
                     {item.tag && (
-                      <span class="text-[9px] font-extrabold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">
+                      <span class="text-[9px] font-extrabold bg-red-100 dark:bg-red-950/80 text-red-700 dark:text-red-400 px-1.5 py-0.2 rounded">
                         {item.tag}
                       </span>
                     )}
                   </div>
                   <div class="mt-1 flex items-baseline gap-2">
-                    <span class="text-sm font-extrabold text-red-600">
+                    <span class="text-sm font-extrabold text-red-600 dark:text-red-400">
                       ৳{item.salePrice.toLocaleString('bn-BD')}
                     </span>
-                    <span class="text-[11px] text-slate-400 line-through">
+                    <span class="text-[11px] text-slate-400 dark:text-slate-500 line-through">
                       ৳{item.regularPrice.toLocaleString('bn-BD')}
                     </span>
                   </div>
@@ -79,23 +79,23 @@ import { products } from '../data/products';
           </div>
 
           <!-- Quantity Selector -->
-          <div class="mt-4 flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-xs sm:text-sm font-bold text-slate-700">পরিমাণ (Quantity):</span>
+          <div class="mt-4 flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">পরিমাণ (Quantity):</span>
             <div class="flex items-center gap-3">
               <button 
                 type="button" 
                 id="qty-decrease" 
-                class="w-9 h-9 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center cursor-pointer transition active:scale-95"
+                class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer transition active:scale-95"
               >
                 -
               </button>
-              <span id="qty-display" class="w-8 text-center font-extrabold text-base text-slate-900">
+              <span id="qty-display" class="w-8 text-center font-extrabold text-base text-slate-900 dark:text-white">
                 ১
               </span>
               <button 
                 type="button" 
                 id="qty-increase" 
-                class="w-9 h-9 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center cursor-pointer transition active:scale-95"
+                class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer transition active:scale-95"
               >
                 +
               </button>
@@ -105,7 +105,7 @@ import { products } from '../data/products';
 
         <!-- STEP 2: Customer Details -->
         <div>
-          <label class="block text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+          <label class="block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs">২</span>
             <span>আপনার ডেলিভারি তথ্য দিন:</span>
           </label>
@@ -113,22 +113,22 @@ import { products } from '../data/products';
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             <!-- Customer Auth State Banner -->
-            <div id="checkout-auth-banner" class="sm:col-span-2 mb-2 p-3.5 rounded-2xl border border-slate-200 bg-slate-50 transition">
+            <div id="checkout-auth-banner" class="sm:col-span-2 mb-2 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 transition">
               
               <!-- Logged Out View -->
               <div id="auth-logged-out-box" class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
                   <span class="text-xl">⚡</span>
                   <div>
-                    <span class="text-xs font-bold text-slate-800 block">লগইন করে ১-ক্লিকে দ্রুত অর্ডার করতে চান?</span>
-                    <span class="text-[11px] text-slate-500">Google বা ফোন নম্বর দিয়ে সহজে সাইন ইন করুন (ঐচ্ছিক)</span>
+                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block">লগইন করে ১-ক্লিকে দ্রুত অর্ডার করতে চান?</span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400">Google বা ফোন নম্বর দিয়ে সহজে সাইন ইন করুন (ঐচ্ছিক)</span>
                   </div>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                   <button 
                     type="button" 
                     id="btn-quick-google-login" 
-                    class="inline-flex items-center gap-1.5 bg-white border border-slate-300 hover:border-red-500 text-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
+                    class="inline-flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-red-500 text-slate-800 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
                   >
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.15z"/>
@@ -141,7 +141,7 @@ import { products } from '../data/products';
                   <button 
                     type="button" 
                     id="btn-open-login-modal" 
-                    class="bg-slate-900 hover:bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
+                    class="bg-slate-900 dark:bg-slate-800 hover:bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer transition"
                   >
                     লগইন / OTP
                   </button>
@@ -151,21 +151,21 @@ import { products } from '../data/products';
               <!-- Logged In View -->
               <div id="auth-logged-in-box" class="hidden items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 border border-emerald-500/40 flex items-center justify-center font-bold text-xs shrink-0">
+                  <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-bold text-xs shrink-0">
                     ✓
                   </div>
                   <div>
                     <div class="flex items-center gap-1.5">
-                      <span class="text-xs font-black text-slate-900" id="logged-user-name"></span>
-                      <span class="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded font-bold">ভেরিফাইড একাউন্ট</span>
+                      <span class="text-xs font-black text-slate-900 dark:text-white" id="logged-user-name"></span>
+                      <span class="text-[10px] bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.2 rounded font-bold">ভেরিফাইড একাউন্ট</span>
                     </div>
-                    <span class="text-[11px] text-slate-500" id="logged-user-info"></span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400" id="logged-user-info"></span>
                   </div>
                 </div>
                 <button 
                   type="button" 
                   id="btn-customer-logout" 
-                  class="text-xs text-rose-500 hover:text-rose-700 font-bold px-2 py-1 rounded-lg hover:bg-rose-50 transition cursor-pointer"
+                  class="text-xs text-rose-500 hover:text-rose-700 font-bold px-2 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
                 >
                   লগআউট
                 </button>
@@ -175,7 +175,7 @@ import { products } from '../data/products';
 
             <!-- Full Name -->
             <div class="sm:col-span-2">
-              <label for="cust-name" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="cust-name" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 আপনার নাম *
               </label>
               <input 
@@ -184,13 +184,13 @@ import { products } from '../data/products';
                 name="customer_name" 
                 required 
                 placeholder="যেমন: মোঃ রফিকুল ইসলাম" 
-                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
+                class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
               />
             </div>
 
             <!-- Mobile Number -->
             <div class="sm:col-span-1">
-              <label for="cust-phone" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="cust-phone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 মোবাইল নম্বর * (১১ ডিজিট)
               </label>
               <input 
@@ -200,29 +200,29 @@ import { products } from '../data/products';
                 required 
                 pattern="^(01)[3-9][0-9]{8}$"
                 placeholder="যেমন: 01914457183" 
-                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition font-mono"
+                class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition font-mono"
               />
             </div>
 
             <!-- Delivery Location -->
             <div class="sm:col-span-1">
-              <label class="block text-xs font-bold text-slate-700 mb-1">
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 ডেলিভারি এলাকা *
               </label>
               <div class="grid grid-cols-2 gap-2">
-                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
+                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/60 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 dark:has-[:checked]:bg-red-950/40 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
                   <input type="radio" name="shipping_location" value="dhaka" data-cost="70" checked class="accent-red-600" />
                   <div class="text-xs">
-                    <span class="font-bold text-slate-800 block">ঢাকার ভেতরে</span>
-                    <span class="text-red-600 font-semibold">৳৭০</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200 block">ঢাকার ভেতরে</span>
+                    <span class="text-red-600 dark:text-red-400 font-semibold">৳৭০</span>
                   </div>
                 </label>
 
-                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
+                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/60 cursor-pointer has-[:checked]:border-red-600 has-[:checked]:bg-red-50/50 dark:has-[:checked]:bg-red-950/40 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
                   <input type="radio" name="shipping_location" value="outside" data-cost="130" class="accent-red-600" />
                   <div class="text-xs">
-                    <span class="font-bold text-slate-800 block">ঢাকার বাইরে</span>
-                    <span class="text-red-600 font-semibold">৳১৩০</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200 block">ঢাকার বাইরে</span>
+                    <span class="text-red-600 dark:text-red-400 font-semibold">৳১৩০</span>
                   </div>
                 </label>
               </div>
@@ -230,7 +230,7 @@ import { products } from '../data/products';
 
             <!-- Full Address -->
             <div class="sm:col-span-2">
-              <label for="cust-address" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="cust-address" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 পূর্ণ ঠিকানা (বাসা/রোড/থানা/উপজেলা/জেলা) *
               </label>
               <textarea 
@@ -239,52 +239,52 @@ import { products } from '../data/products';
                 rows="2" 
                 required 
                 placeholder="যেমন: বাসা নং ১২, রোড নং ৫, সেক্টর ৭, উত্তরা, ঢাকা" 
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition"
               ></textarea>
             </div>
           </div>
         </div>
 
         <!-- STEP 3: Order Summary & Total -->
-        <div class="rounded-2xl bg-slate-900 text-white p-5 sm:p-6 space-y-3">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 flex items-center justify-between">
+        <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-5 sm:p-6 space-y-3 shadow-md transition-colors">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center justify-between">
             <span>অর্ডার সামারি (Order Summary)</span>
-            <span class="text-emerald-400 flex items-center gap-1">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
               ক্যাশ অন ডেলিভারি
             </span>
           </div>
 
           <div class="space-y-1.5 text-xs sm:text-sm">
-            <div class="flex justify-between text-slate-300">
+            <div class="flex justify-between text-slate-600 dark:text-slate-300">
               <span>সিলেক্টেড প্রোডাক্ট:</span>
-              <span id="summary-prod-name" class="font-semibold text-right max-w-[200px] sm:max-w-xs truncate text-white">
+              <span id="summary-prod-name" class="font-semibold text-right max-w-[200px] sm:max-w-xs truncate text-slate-900 dark:text-white">
                 হোম ও কিচেন সেফটি কম্বো
               </span>
             </div>
 
-            <div class="flex justify-between text-slate-300">
+            <div class="flex justify-between text-slate-600 dark:text-slate-300">
               <span>পরিমাণ:</span>
-              <span id="summary-qty" class="font-semibold text-white">১টি</span>
+              <span id="summary-qty" class="font-semibold text-slate-900 dark:text-white">১টি</span>
             </div>
 
-            <div class="flex justify-between text-slate-300">
+            <div class="flex justify-between text-slate-600 dark:text-slate-300">
               <span>প্রোডাক্ট সাবটোটাল:</span>
-              <span id="summary-subtotal" class="font-semibold text-white">৳২,৯৫০</span>
+              <span id="summary-subtotal" class="font-semibold text-slate-900 dark:text-white">৳২,৯৫০</span>
             </div>
 
-            <div class="flex justify-between text-slate-300">
+            <div class="flex justify-between text-slate-600 dark:text-slate-300">
               <span>ডেলিভারি চার্জ:</span>
-              <span id="summary-shipping" class="font-semibold text-white">৳৭০</span>
+              <span id="summary-shipping" class="font-semibold text-slate-900 dark:text-white">৳৭০</span>
             </div>
           </div>
 
-          <div class="pt-3 border-t border-slate-800 flex items-baseline justify-between text-base sm:text-xl font-bold">
-            <span class="text-slate-100">সর্বমোট প্রদেয় টাকা:</span>
-            <span id="summary-total" class="text-2xl font-black text-amber-400">৳৩,০২০</span>
+          <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-baseline justify-between text-base sm:text-xl font-bold">
+            <span class="text-slate-900 dark:text-slate-100">সর্বমোট প্রদেয় টাকা:</span>
+            <span id="summary-total" class="text-2xl font-black text-red-600 dark:text-amber-400">৳৩,০২০</span>
           </div>
 
-          <p class="text-[11px] text-slate-400 pt-1">
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
             * পার্সেল পাওয়ার পর মূল্য পরিশোধ করবেন। কোনো অগ্রিম চার্জ নেই।
           </p>
         </div>
@@ -428,11 +428,11 @@ import { products } from '../data/products';
     radioLabels.forEach(lbl => {
       const radio = lbl.querySelector('input[type="radio"]') as HTMLInputElement;
       if (radio && radio.checked) {
-        lbl.classList.add('border-red-600', 'bg-red-50/40', 'ring-2', 'ring-red-500/20');
-        lbl.classList.remove('border-slate-200', 'bg-white');
+        lbl.classList.add('border-red-600', 'bg-red-50/60', 'dark:bg-red-950/40', 'ring-2', 'ring-red-500/20');
+        lbl.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900/60');
       } else {
-        lbl.classList.remove('border-red-600', 'bg-red-50/40', 'ring-2', 'ring-red-500/20');
-        lbl.classList.add('border-slate-200', 'bg-white');
+        lbl.classList.remove('border-red-600', 'bg-red-50/60', 'dark:bg-red-950/40', 'ring-2', 'ring-red-500/20');
+        lbl.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900/60');
       }
     });
   }
